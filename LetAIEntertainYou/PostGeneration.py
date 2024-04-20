@@ -4,13 +4,17 @@ import json
 import os
 import csv
 import random
+import re
 
 from LetAIEntertainYou.DataGen import entries
 
 examples = entries
-
 #entries_small = random.sample(entries, 5)
 #these_examples = "\n".join(f"{index + 1}. {string}" for index, string in enumerate(entries_small))
+output_dir = "./LetAIEntertainYou/Posts/Text"
+os.makedirs(output_dir, exist_ok=True)
+csv_filename = "./LetAIEntertainYou/Posts/posts.csv"
+file_exists = os.path.isfile(csv_filename)
 
 openai.api_key = yaml.safe_load(open("./LetAIEntertainYou/config.yml")).get('KEYS', {}).get('openai')
 model = 'gpt-4-turbo-2024-04-09'
@@ -71,6 +75,24 @@ functions = [
             },
             "required": ["these_examples", "number_of_posts"]
         }
+    },
+    {
+        "name": "write_posts_4",
+        "description": "A function that writes number_of_posts posts for a neighbourhood website in the style and length of these_examples ",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "posts": {
+                    "type": "array",
+                    "description": "A list that contains number_of_posts posts",
+                    "items": {
+                        "type": "string",
+                        "description": "The post that was written,  loosely based on these_examples in length and style, following these_instructions"
+                    }
+                }
+            },
+            "required": ["these_examples", "number_of_posts", "these_instructions"]
+        }
     }
 ]
 
@@ -113,7 +135,6 @@ posts = []
 # data = json.loads(argument_string_prod)
 
 def fetch_reponse():
-
     #take new examples each time
     entries_small = random.sample(entries, 5)
     these_examples = "\n".join(f"{index + 1}. {string}" for index, string in enumerate(entries_small))
@@ -137,14 +158,15 @@ def append_posts(data):
         posts.append(post)
 
 
-for _ in range(20):
-    mocks = fetch_reponse()
-    append_posts(mocks)
-
-output_dir = "./LetAIEntertainYou/Posts/Text"
-os.makedirs(output_dir, exist_ok=True)
-csv_filename = "./LetAIEntertainYou/Posts/posts.csv"
-file_exists = os.path.isfile(csv_filename)
+def clean_strings(string_list):
+    cleaned_list = []
+    for content in string_list:
+        # Check if the string starts with a number followed by '.'
+        if re.match(r'^\d+\.', content):
+            # Remove the number and the dot, and any spaces immediately after
+            content = re.sub(r'^\d+\.\s*', '', content)
+        cleaned_list.append(content)
+    return cleaned_list
 
 
 def find_highest_index(directory):
@@ -157,21 +179,53 @@ def find_highest_index(directory):
     return highest
 
 
-# Find the highest current index in the directory
+def persist_posts(posts_cleaned_up, starting_index_calc):
+    for index, string in enumerate(posts_cleaned_up, start=starting_index_calc + 1):
+        filename = os.path.join(output_dir, f"file_{index}.txt")
+        with open(filename, 'w') as file:
+            file.write(string)
 
+    with open(csv_filename, 'a', newline='') as file:
+        writer = csv.writer(file)
+
+        if not file_exists:
+            writer.writerow(['String'])
+
+        for string in posts_cleaned_up:
+            writer.writerow([string])
+    print('done')
+    #posts_clean=[]
+
+
+# def read_files_in_directory(directory):
+#     all_texts = []
+#     for filename in os.listdir(directory):
+#         if filename.endswith(".txt"):
+#             file_path = os.path.join(directory, filename)
+#             try:
+#                 with open(file_path, 'r', encoding='utf-8') as file:
+#                     content = file.read().strip()
+#             except UnicodeDecodeError:
+#                 # Try reading with a different encoding if UTF-8 fails
+#                 with open(file_path, 'r', encoding='windows-1252') as file:
+#                     content = file.read().strip()
+#
+#             # Check if the content starts with a number followed by '.'
+#             if re.match(r'^\d+\.', content):
+#                 # Remove the number and the dot
+#                 content = re.sub(r'^\d+\.\s*', '', content)
+#             all_texts.append(content)
+#     return all_texts
+#
+# directory_path = './LetAIEntertainYou/Posts/Text'
+# texts = read_files_in_directory(directory_path)
+
+#be VERY careful with the range!
+for _ in range(10):
+    mocks = fetch_reponse()
+    append_posts(mocks)
+print('done')
+
+posts_clean = clean_strings(posts)
 starting_index = find_highest_index(output_dir)
-
-for index, string in enumerate(posts, start=starting_index + 1):
-    filename = os.path.join(output_dir, f"file_{index}.txt")
-    with open(filename, 'w') as file:
-        file.write(string)
-
-
-with open(csv_filename, 'a', newline='') as file:
-    writer = csv.writer(file)
-
-    if not file_exists:
-        writer.writerow(['String'])
-
-    for string in posts:
-        writer.writerow([string])
+persist_posts(posts_clean, starting_index)
