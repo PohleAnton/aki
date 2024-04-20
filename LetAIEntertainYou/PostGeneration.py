@@ -15,7 +15,10 @@ output_dir = "./LetAIEntertainYou/Posts/Text"
 os.makedirs(output_dir, exist_ok=True)
 csv_filename = "./LetAIEntertainYou/Posts/posts.csv"
 file_exists = os.path.isfile(csv_filename)
-
+data=[]
+mocks=[]
+posts = []
+number_of_posts = 30
 openai.api_key = yaml.safe_load(open("./LetAIEntertainYou/config.yml")).get('KEYS', {}).get('openai')
 model = 'gpt-4-turbo-2024-04-09'
 model_dev = 'gpt-3.5-turbo-0125'
@@ -105,8 +108,8 @@ these_instructions = """
 6. Describe Relatable Scenarios: Focus on scenarios that are commonly experienced in many communities, such as local events, school activities, and neighborhood issues. This ensures that the posts are relatable and realistically grounded.
 7. Avoid flashy, 3 word introductions
 """
-number_of_posts = 30
-posts = []
+
+
 
 
 # test = openai.ChatCompletion.create(
@@ -138,7 +141,6 @@ def fetch_reponse():
     #take new examples each time
     entries_small = random.sample(entries, 5)
     these_examples = "\n".join(f"{index + 1}. {string}" for index, string in enumerate(entries_small))
-
     test = openai.ChatCompletion.create(
         model=model,
         messages=[
@@ -150,12 +152,14 @@ def fetch_reponse():
     )
     argument_string_prod = test['choices'][0]['message']['function_call']['arguments']
     data = json.loads(argument_string_prod)
+    print(data)
     return data
 
 
 def append_posts(data):
     for post in data["posts"]:
         posts.append(post)
+    return posts
 
 
 def clean_strings(string_list):
@@ -182,10 +186,10 @@ def find_highest_index(directory):
 def persist_posts(posts_cleaned_up, starting_index_calc):
     for index, string in enumerate(posts_cleaned_up, start=starting_index_calc + 1):
         filename = os.path.join(output_dir, f"file_{index}.txt")
-        with open(filename, 'w') as file:
+        with open(filename, 'w', encoding='utf-8') as file:
             file.write(string)
 
-    with open(csv_filename, 'a', newline='') as file:
+    with open(csv_filename, 'a', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
 
         if not file_exists:
@@ -220,8 +224,10 @@ def persist_posts(posts_cleaned_up, starting_index_calc):
 # directory_path = './LetAIEntertainYou/Posts/Text'
 # texts = read_files_in_directory(directory_path)
 
+
+
 #be VERY careful with the range!
-for _ in range(10):
+for _ in range(1):
     mocks = fetch_reponse()
     append_posts(mocks)
 print('done')
@@ -229,3 +235,6 @@ print('done')
 posts_clean = clean_strings(posts)
 starting_index = find_highest_index(output_dir)
 persist_posts(posts_clean, starting_index)
+
+
+
