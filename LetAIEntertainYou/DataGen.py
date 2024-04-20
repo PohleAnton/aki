@@ -415,8 +415,8 @@ string = """
 1130.	Found: A GoPro camera near the trails at Ridgeback Mountain. It contains footage from a biking trip. To claim, please describe the content of the videos or any distinguishing features of the camera.
 """
 entries = re.findall(r'\d+\.\s+(.*?)(?=\d+\.|$)', string, re.DOTALL)
-entries[212]
-entries_small = random.sample(entries, 20)
+
+entries_small = random.sample(entries, 5)
 
 #consider: https://chat.openai.com/share/d46951c8-70ee-4dc9-a726-bcba07e86d4d
 instructions = """
