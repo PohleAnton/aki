@@ -39,7 +39,7 @@ functions = [
                     }
                 }
             },
-            "required": ["this_count", "these_examples", "these instructions"]
+            "required": ["this_count", "these_examples", "these_instructions"]
         }
     },
     {
@@ -57,7 +57,7 @@ functions = [
                     }
                 }
             },
-            "required": ["this_count", "these instructions"]
+            "required": ["this_count", "these_instructions"]
         }
     },
 
