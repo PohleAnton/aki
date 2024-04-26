@@ -95,8 +95,8 @@ functions = [
     }
 ]
 
-#for i in range(27,29):
-    #sublist = result_lists[29]
+for i in range(34,37):
+    sublist = result_lists[i]
     provided_string = "\n".join(f" {i + 1}. {entry}" for i, entry in enumerate(sublist))
     test = openai.ChatCompletion.create(
         model=model_dev,
@@ -112,10 +112,11 @@ functions = [
     for subject_line in data["subject_lines"]:
         generated_dev.append(subject_line)
     print('good')
-
-
+generated_dev = generated_dev[:-1]
+generated_dev = generated_dev[10:]
+safety = copy.deepcopy(generated_dev)
 folder_path='./LetAIEntertainYou/Posts/RuleGenerated/'
-output_file ="base.csv"
+output_file ="base_2.csv"
 
 with open(output_file, 'w', newline='') as csvfile:
     csv_writer=csv.writer(csvfile)
@@ -124,9 +125,9 @@ with open(output_file, 'w', newline='') as csvfile:
         csv_writer.writerow([item])
 
 
-output_file_rules = "rules.csv"
+output_file_rules = "rules_2.csv"
 data=[]
-for i in range(1, 291):
+for i in range(1, 351):
         file_path = os.path.join(folder_path, f'processed_file_{i}.txt')
         print(i)
         with open(file_path, 'r', encoding='utf-8') as file:
