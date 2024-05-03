@@ -1,5 +1,7 @@
+import os
+
 from groq import Groq
-import json
+from dotenv import load_dotenv
 import time
 import pandas as pd
 
@@ -132,7 +134,9 @@ def gen_rule_based(row):
 
 # model = GPT4All('Meta-Llama-3-8B-Instruct.Q4_0.gguf')
 # llama = LlamaAPI("LL-nGmL3RPSzqGWilWDPoUuQ51hdsuIo1TBg8ls576gZMj4h5KfYwztRts46qxdxnnA")
-client = Groq(api_key='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')
+
+load_dotenv()
+client = Groq(api_key=os.getenv('ACCESS_KEY'))
 MODEL = 'llama3-8b-8192'
 
 set_of_instruction = """
@@ -160,8 +164,8 @@ csv = pd.read_csv("./Posts/llama.csv", encoding='utf-8-sig', sep=";")
 print(csv)
 
 i = 1
-#csv["Llama Baseline"] = csv.loc[:, "Posts"].apply(gen_llama)
-csv["Rule-based Baseline"] = csv.loc[:, "Posts"].apply(gen_rule_based)
+csv["Llama Baseline"] = csv.loc[:, "Posts"].apply(gen_llama)
+#csv["Rule-based Baseline"] = csv.loc[:, "Posts"].apply(gen_rule_based)
 
-csv.to_csv(path_or_buf='./Posts/llama.csv', index=False, encoding='utf-8-sig', sep=";")
+#csv.to_csv(path_or_buf='./Posts/llama.csv', index=False, encoding='utf-8-sig', sep=";")
 
