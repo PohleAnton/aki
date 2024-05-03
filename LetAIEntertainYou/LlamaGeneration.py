@@ -1,9 +1,12 @@
+import json
 import os
 
+import openai
 from groq import Groq
 from dotenv import load_dotenv
 import time
 import pandas as pd
+
 
 def gen_llama(row):
     try:
@@ -128,6 +131,51 @@ def gen_llama(row):
         return ""
 
 
+def gen_chatgpt_based(row):
+    try:
+        print("Input: " + str(row))
+        start = time.perf_counter()
+
+        functions = [
+            {
+                "name": "write_subject_lines",
+                "description": "A function that outputs the most interesting phrase for a given post following a set_of_instruction",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "subject_line": {
+                            "type": "string",
+                            "description": "A generated subject line"
+                        }
+                    },
+                    "required": ["row", "set_of_instruction"]
+                }
+            }
+        ]
+
+        response = openai.ChatCompletion.create(
+            model='gpt-3.5-turbo-0125',
+            messages=[
+                {'role': 'user',
+                 'content': f"write_subject_lines for the following post: \n\n {row} \n\n Write according to the following set of instructions: \n\n {set_of_instruction}"}
+            ],
+            functions=functions,
+            function_call={'name': 'write_subject_lines'}
+        )
+        output = json.loads(response['choices'][0]['message']['function_call']['arguments'])['subject_line']
+
+        print("Output: " + output)
+        stop = time.perf_counter()
+        print(f"Seconds passed: {stop - start:0.4f}")
+
+        if len(output.split(" ")) > 10:
+            output = ' '.join(output.split(" ")[0:10]) + '...'
+
+        return output
+    except Exception as e:
+        return ""
+
+
 def gen_rule_based(row):
     return ' '.join(row.split(" ")[0:10]) + '...'
 
@@ -136,8 +184,10 @@ def gen_rule_based(row):
 # llama = LlamaAPI("LL-nGmL3RPSzqGWilWDPoUuQ51hdsuIo1TBg8ls576gZMj4h5KfYwztRts46qxdxnnA")
 
 load_dotenv()
-client = Groq(api_key=os.getenv('ACCESS_KEY'))
+client = Groq(api_key=os.getenv('LLAMA_ACCESS_KEY'))
 MODEL = 'llama3-8b-8192'
+
+openai.api_key = os.getenv('OPENAI_ACCESS_KEY')
 
 set_of_instruction = """
     We will send an email containing a post from a Nextdoor user. We want to use the most interesting part of the post as an email subject line.
@@ -161,11 +211,9 @@ set_of_instruction = """
 
 csv = pd.read_csv("./Posts/llama.csv", encoding='utf-8-sig', sep=";")
 
-print(csv)
-
 i = 1
-csv["Llama Baseline"] = csv.loc[:, "Posts"].apply(gen_llama)
+#csv["Llama Baseline"] = csv.loc[:, "Posts"].apply(gen_llama)
 #csv["Rule-based Baseline"] = csv.loc[:, "Posts"].apply(gen_rule_based)
+csv["ChatGPT-3.5-Turbo Baseline"] = csv.loc[:, "Posts"].apply(gen_chatgpt_based)
 
-#csv.to_csv(path_or_buf='./Posts/llama.csv', index=False, encoding='utf-8-sig', sep=";")
-
+csv.to_csv(path_or_buf='./Posts/llama_und_ChatGPT.csv', index=False, encoding='utf-8-sig', sep=";")
