@@ -1,5 +1,6 @@
 import csv
 import os
+import pandas as pd
 
 # Path to the input CSV file
 input_csv_path = 'LetAIEntertainYou/Posts/llama_und_ChatGPT_unbloat.csv'
@@ -84,7 +85,7 @@ output_1 = ['B', 'B', 'A', 'B', 'B', 'A', 'A', 'A', 'A', 'B', 'A', 'A', 'B', 'B'
 count_A = output_1.count('A')
 
 
-single_1 =[
+singles_1 =[
     'B', 'B', 'B', 'B', 'B',
     'A', 'A', 'B', 'A', 'B',
     'A', 'B', 'B', 'A', 'B',
@@ -96,11 +97,11 @@ single_1 =[
     'B', 'A', 'A', 'B', 'A',
     'B', 'A', 'B', 'A', 'B'
 ]
-count_A = single_1.count('A')
+count_A = singles_1.count('A')
 #22 - llama
 #https://chat.openai.com/share/4d06efeb-e209-475f-9555-193908257210
 
-single_2 =[
+singles_2 =[
     'B', 'B', 'B', 'B', 'A',
     'A', 'A', 'B', 'A', 'B',
     'B', 'A', 'A', 'B', 'A',
@@ -112,11 +113,11 @@ single_2 =[
     'B', 'B', 'B', 'B', 'B',
     'A', 'A', 'B', 'A', 'B'
 ]
-count_A = single_2.count('A')
+count_A = singles_2.count('A')
 #18 f llama
 #https://chat.openai.com/share/ad6cdace-db04-4ff2-8557-e010bcd50e29
 
-single_3 = [
+singles_3 = [
     'B', 'B', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'A',
     'B', 'B', 'B', 'B', 'B', 'B', 'A', 'A', 'B', 'A',
     'A', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A',
@@ -124,27 +125,27 @@ single_3 = [
     'A', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'B', 'A'
 ]
 
-count_A = single_3.count('A')
+count_A = singles_3.count('A')
 #14
 #https://chat.openai.com/share/b9541b4f-ffcb-464b-8bad-cf59f5a6c37c
 
-single_4 =['A', 'A', 'B', 'B', 'B', 'A', 'B', 'A', 'B', 'A',
+singles_4 =['A', 'A', 'B', 'B', 'B', 'A', 'B', 'A', 'B', 'A',
  'B', 'A', 'A', 'B', 'B', 'A', 'A', 'A', 'A', 'A',
  'A', 'B', 'A', 'B', 'B', 'B', 'A', 'B', 'A', 'B',
  'A', 'B', 'A', 'A', 'B', 'B', 'B', 'A', 'B', 'A',
  'A', 'B', 'A', 'A', 'B', 'A', 'A', 'B', 'B', 'A']
 
-count_A = single_4.count('A')
+count_A = singles_4.count('A')
 #27
 #https://chat.openai.com/share/ad7b0bff-c039-47d6-b1ea-e3b40dfb8351
 
-single_5=['B', 'B', 'B', 'B', 'B', 'A', 'B', 'A', 'B', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'B', 'A', 'A', 'A', 'A', 'B', 'B', 'A', 'B', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'B', 'A', 'B', 'A', 'B', 'B', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'B']
+singles_5=['B', 'B', 'B', 'B', 'B', 'A', 'B', 'A', 'B', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'B', 'A', 'A', 'A', 'A', 'B', 'B', 'A', 'B', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'B', 'A', 'B', 'A', 'B', 'B', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'B']
 
-count_A = single_5.count('A')
+count_A = singles_5.count('A')
 #22
 #https://chat.openai.com/share/b085b97d-8730-448f-bb66-8fcadbd43643
 
-single_6 =[
+singles_6 =[
     'B', 'A', 'A', 'B', 'A',
     'A', 'B', 'B', 'A', 'B',
     'A', 'B', 'B', 'A', 'B',
@@ -156,17 +157,17 @@ single_6 =[
     'A', 'A', 'B', 'B', 'B',
     'A', 'A', 'B', 'A', 'B'
 ]
-count_A = single_6.count('A')
+count_A = singles_6.count('A')
 #24
 #https://chat.openai.com/share/fdd51cff-2480-457b-bfe5-5c53dcccc44a
 
-single_7 = ['A', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']
+singles_7 =['A', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'A', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'A', 'A', 'A', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'A', 'A', 'B', 'B', 'B', 'A', 'A', 'B', 'A', 'B', 'B', 'A', 'B', 'A', 'A', 'A', 'B', 'A', 'B', 'B', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'A', 'A', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'A', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'A', 'B', 'B', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'B', 'A', 'A', 'A', 'B', 'A', 'A', 'B', 'B']
 
 
-count_A = single_7.count('A')
+count_A = singles_7.count('A')
 #49
 #https://chat.openai.com/share/ffe97025-f015-43ab-97a6-8a60fd982b8f
-single_8 = [
+singles_8 = [
     "B", "B", "B", "B", "A", "A", "B", "A", "B", "A",
     "B", "A", "B", "A", "A", "B", "A", "B", "A", "B",
     "A", "B", "A", "B", "B", "A", "B", "A", "B", "B",
@@ -178,17 +179,37 @@ single_8 = [
     "B", "A", "B", "B", "B", "B", "B", "B", "B", "A",
     "A", "A", "B", "A", "B", "B", "A", "B", "A", "B"
 ]
-count_A = single_8.count('A')
+count_A = singles_8.count('A')
 #42 (of COURSE)
 #https://chat.openai.com/share/7ccb8160-81dd-4cd3-948a-0b842824f81d
 
-single_9 = ['B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'B', 'B', 'A', 'B']
-
-count_A = single_9.count('A')
+singles_9 = [
+    "B", "B", "B", "A", "B",
+    "A", "B", "B", "A", "B",
+    "A", "A", "B", "B", "A",
+    "B", "B", "B", "A", "B",
+    "A", "B", "B", "A", "B",
+    "A", "A", "B", "B", "A",
+    "B", "B", "B", "A", "B",
+    "A", "B", "B", "A", "B",
+    "A", "A", "B", "B", "A",
+    "B", "B", "B", "A", "B",
+    "A", "B", "B", "A", "B",
+    "A", "A", "B", "B", "A",
+    "B", "B", "B", "A", "B",
+    "A", "B", "B", "A", "B",
+    "A", "A", "B", "B", "A",
+    "B", "B", "B", "A", "B",
+    "A", "B", "B", "A", "B",
+    "A", "A", "B", "B", "A",
+    "B", "B", "B", "A", "B",
+    "A", "B", "B", "A", "B"
+]
+count_A = singles_9.count('A')
 #21
 #https://chat.openai.com/share/b9a98ba4-d226-4a56-8333-fbc84c7a1bce
 
-single_10 = ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B',
+singles_10 = ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B',
  'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B',
  'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B',
  'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B',
@@ -199,12 +220,12 @@ single_10 = ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B',
  'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B',
  'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']
 
-count_A = single_10.count('A')
+count_A = singles_10.count('A')
 #50
 #https://chat.openai.com/share/f5c676cf-5221-4386-9d28-41c6e96ff76a
 
 
-single_11 =[
+singles_11 =[
     'B', 'B', 'B', 'B', 'A', 'A', 'B', 'A', 'A', 'B',
     'B', 'B', 'B', 'B', 'B', 'A', 'A', 'A', 'A', 'B',
     'B', 'B', 'B', 'B', 'A', 'A', 'B', 'A', 'A', 'B',
@@ -216,7 +237,7 @@ single_11 =[
     'B', 'B', 'B', 'B', 'A', 'A', 'B', 'A', 'A', 'B',
     'B', 'B', 'B', 'B', 'B', 'A', 'A', 'A', 'A', 'B']
 
-count_A = single_11.count('A')
+count_A = singles_11.count('A')
 #40
 #https://chat.openai.com/share/b9e3eba0-f858-4997-990e-54f29d46d2ba
 
@@ -278,7 +299,22 @@ count_A = singles_14.count('A')
 #7
 #https://chat.openai.com/share/6cfc1da2-98eb-4b21-acaa-082cfd64e7c4
 
-#380 von 1016: 37.4% f. llama
+
+
+
+
+all_singles=[]
+
+for i in range(1, 15):  # From single_1 to single_14
+    list_name = f'singles_{i}'
+    # Retrieve the list using its name from the globals dictionary
+    current_list = globals().get(list_name, [])
+    all_singles.extend(current_list)
+count_A = all_singles.count('A')
+count_B = all_singles.count('B')
+
+#für a: 44,88 %
+#für b: 55.12 %
 
 #both:
 
@@ -506,7 +542,7 @@ count_B = three_16.count('B')
 #16,17,17
 #https://chat.openai.com/share/2e355791-7953-49e0-9212-b23cf193bc4d
 
-three_17 = results = [
+three_17 = [
     'C', 'A', 'C', 'B', 'B', 'A', 'B', 'C', 'A', 'B',
     'C', 'A', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A',
     'C', 'B', 'A', 'C', 'B', 'A', 'B', 'C', 'A', 'B',
@@ -521,6 +557,55 @@ count_B = three_17.count('B')
 #17,17,16
 #https://chat.openai.com/share/7bca2ecc-4c46-402d-87a3-c251bf1fd9c3
 
-#298,320,282
-#33.1, 35,5, 31.3
-#including csb_18
+
+three_18 = results = ['B', 'C', 'C', 'B', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'C', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A', 'C', 'B', 'A']
+
+
+
+count_A = three_18.count('A')
+count_B = three_18.count('B')
+#15,18,17
+#https://chat.openai.com/share/70529ead-f84a-48e9-9c0d-6e2d2535c4f7
+
+three_19 = [
+    'B', 'B', 'C', 'B', 'B', 'B', 'C', 'A', 'C', 'A',
+    'C', 'A', 'B', 'C', 'A', 'B', 'A', 'B', 'C', 'A',
+    'B', 'B', 'C', 'B', 'A', 'C', 'B', 'C', 'A', 'C',
+    'B', 'C', 'A', 'B', 'A', 'B', 'C', 'A', 'B', 'C',
+    'A', 'C', 'B', 'B', 'A', 'C', 'B', 'B', 'C', 'A'
+]
+
+
+count_A = three_19.count('A')
+count_B = three_19.count('B')
+#14,20,16
+#https://chat.openai.com/share/7bca2ecc-4c46-402d-87a3-c251bf1fd9c3
+
+
+three_20  = ['B', 'B', 'B', 'A', 'B', 'C', 'A', 'C', 'A', 'A', 'B', 'B', 'C', 'B', 'A', 'B']
+
+
+
+
+count_A = three_20.count('A')
+count_B = three_20.count('B')
+
+#https://chat.openai.com/share/d2477a06-2a26-494c-8a0b-e008b18af905
+
+all_threes=[]
+
+for i in range(1, 22):  # From single_1 to single_14
+    list_name = f'three_{i}'
+    print(list_name)
+    # Retrieve the list using its name from the globals dictionary
+    current_list = globals().get(list_name, [])
+    all_threes.extend(current_list)
+count_A = all_threes.count('A')
+count_B = all_threes.count('B')
+count_C = all_threes.count('C')
+
+
+
+df =pd.read_csv('LetAIEntertainYou/Posts/llama_und_base_unbloat.csv',delimiter=';')
+df['judgement'] = all_singles
+df.to_csv('LetAIEntertainYou/Posts/llama_und_base_judged.csv', sep=';',index=False)
