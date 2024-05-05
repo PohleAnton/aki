@@ -161,12 +161,13 @@ count_A = singles_6.count('A')
 #24
 #https://chat.openai.com/share/fdd51cff-2480-457b-bfe5-5c53dcccc44a
 
+
 singles_7 =['A', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'A', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'A', 'A', 'A', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'A', 'A', 'B', 'B', 'B', 'A', 'A', 'B', 'A', 'B', 'B', 'A', 'B', 'A', 'A', 'A', 'B', 'A', 'B', 'B', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'A', 'A', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'A', 'A', 'A', 'B', 'B', 'A', 'A', 'B', 'A', 'B', 'B', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'B', 'A', 'A', 'A', 'B', 'A', 'A', 'B', 'B']
 
 
 count_A = singles_7.count('A')
 #49
-#https://chat.openai.com/share/ffe97025-f015-43ab-97a6-8a60fd982b8f
+#https://chat.openai.com/share/b69835ba-52dd-412e-a216-6c7f77021d4b
 singles_8 = [
     "B", "B", "B", "B", "A", "A", "B", "A", "B", "A",
     "B", "A", "B", "A", "A", "B", "A", "B", "A", "B",
@@ -207,7 +208,7 @@ singles_9 = [
 ]
 count_A = singles_9.count('A')
 #21
-#https://chat.openai.com/share/b9a98ba4-d226-4a56-8333-fbc84c7a1bce
+#https://chat.openai.com/share/7a54fd7a-282d-4575-8e1e-53548b944f95
 
 singles_10 = ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B',
  'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B',
