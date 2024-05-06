@@ -3,64 +3,54 @@ import os
 import pandas as pd
 
 # Path to the input CSV file
-input_csv_path = 'LetAIEntertainYou/Posts/llama_und_ChatGPT_unbloat.csv'
+input_csv_path = 'LetAIEntertainYou/Posts/current/llama3base_rules_2.csv'
 
 # Directory to store the output CSV files
-output_directory = 'LetAIEntertainYou/csvchunks/both'
+output_directory = 'LetAIEntertainYou/posts/current/chunks'
 os.makedirs(output_directory, exist_ok=True)
 
 
-records_per_file = 50
+records_per_file = 100
 
 def split_csv():
-    """
-       Reads records from a CSV file, splits them into multiple files based on a preset number of records per file.
+    try:
+        with open(input_csv_path, mode='r', newline='', encoding='windows-1252', errors='replace') as file:
+            reader = csv.reader(file, delimiter=';')
+            header = next(reader)
 
-       This function assumes that the CSV file uses a semicolon (;) as a delimiter. It processes each row from the
-       input CSV file and writes out a new CSV file whenever the number of records reaches a predefined limit (`records_per_file`).
-       Any remaining records after processing in batches are written to a final CSV file.
-       """
-    with open(input_csv_path, mode='r', newline='', encoding='utf-8') as file:
-        reader = csv.reader(file, delimiter=';')
-        header = next(reader)
+            file_count = 1
+            records = []
+            row_count = 1  # Track the row number for logging
 
-        # Initialize
-        file_count = 1
-        records = []
+            for row in reader:
+                try:
+                    records.append(row)
+                    if len(records) == records_per_file:
+                        write_to_file(records, header, file_count)
+                        file_count += 1
+                        records = []
+                    row_count += 1
+                except Exception as e:
+                    print(f"Error processing row {row_count}: {e}")
 
-        for row in reader:
-            records.append(row)
-            # When we hit the records_per_file number, write to a new file
-            if len(records) == records_per_file:
+            if records:
                 write_to_file(records, header, file_count)
-                file_count += 1
-                records = []
-
-
-        if records:
-            write_to_file(records, header, file_count)
+    except Exception as e:
+        print(f"Failed to process file: {e}")
 
 def write_to_file(records, header, file_count):
-    """
-       Writes a list of records to a CSV file, including a header at the top of the file.
-
-       Args:
-           records (list): List of records to write to the file.
-           header (list): The header row for the CSV file.
-           file_count (int): A counter used to number and distinguish each output file.
-
-       This function writes the records to a new CSV file in the specified output directory. Each output file is named
-       according to its sequence number (`file_count`). The function assumes that the output directory is already specified
-       in `output_directory`.
-       """
     output_file_path = os.path.join(output_directory, f'output_{file_count}.csv')
-    with open(output_file_path, mode='w', newline='', encoding='utf-8') as file:
+    with open(output_file_path, mode='w', newline='', encoding='utf-8') as file:  # Using UTF-8 for output
         writer = csv.writer(file, delimiter=';')
         writer.writerow(header)
-        writer.writerows(records)
+        try:
+            writer.writerows(records)
+        except Exception as e:
+            print(f"Failed to write records to file: {e}")
 
 if __name__ == '__main__':
     split_csv()
+
 
 
 #ich habe hier mal mit den bestehenden daten ein paar judgements gemacht.
