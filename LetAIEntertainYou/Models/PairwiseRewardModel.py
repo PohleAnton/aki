@@ -49,13 +49,13 @@ class SubjectLineDataset(Dataset):
 class ComparisonModel(nn.Module):
     def __init__(self):
         super(ComparisonModel, self).__init__()
-        self.fc1 = nn.Linear(1536, 512)
+        self.fc1 = nn.Linear(768, 1536)
         self.relu1 = nn.ReLU()
         self.dropout1 = nn.Dropout(0.5)  # Adding dropout
-        self.fc2 = nn.Linear(512, 128)
+        self.fc2 = nn.Linear(1536, 512)
         self.relu2 = nn.ReLU()
         self.dropout2 = nn.Dropout(0.5)  # Adding dropout
-        self.output = nn.Linear(128, 1)
+        self.output = nn.Linear(512, 1)
 
     def forward(self, vector_a, vector_b):
         x = torch.cat((vector_a, vector_b), dim=1)

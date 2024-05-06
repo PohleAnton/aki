@@ -72,6 +72,7 @@ input_string = ("""2. If anyone is interested in participating in a community re
 5. Learn how to cook international cuisine at our cooking class next Saturday! Sign up by Friday to reserve your spot.""")
 entries_2 = split_entries(input_string)
 print(entries_2)
+
 #hier finden sich vorerst ALLE erzeugten posts. Diese sind auch in der datei LetAIEntertainYou/Posts/more.csv alleine
 #bzw LetAIEntertainYou/Posts/posts_neu.csv zu finden
 # zum weiterarbeiten ist nur post_neu nötig

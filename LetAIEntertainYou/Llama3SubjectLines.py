@@ -190,8 +190,7 @@ def gen_llame_2(row):
     )
     response = outputs[0][input_ids.shape[-1]:]
     res = tokenizer.decode(response, skip_special_tokens=True)
-    if len(res.split(" ")) > 10:
-        res = ' '.join(res.split(" ")[0:10]) + '...'
+
     print(res)
     return res
 
