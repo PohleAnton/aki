@@ -1,3 +1,7 @@
+'''
+ursprüngliche erzeugung von posts. nutzt gpt
+ siehe Llama3Posts
+'''
 import openai
 import yaml
 import json
@@ -111,33 +115,13 @@ these_instructions = """
 
 
 
-
-# test = openai.ChatCompletion.create(
-#     model=model,
-#     messages=[
-#         {'role': 'user',
-#          'content': f"write_posts based on {these_examples}, following {these_instructions}. Write {this_count} number of posts"}
-#     ],
-#     functions=functions,
-#     function_call={'name': 'write_posts'}
-# )
-#
-# argument_string_3 = test['choices'][0]['message']['function_call']['arguments']
-
-
-# test = openai.ChatCompletion.create(
-#         model=model,
-#         messages=[
-#             {'role': 'user',
-#              'content': f"write_posts_2 following {these_instructions}. Write {this_count} number of posts"}
-#         ],
-#         functions=functions,
-#         function_call={'name': 'write_posts_2'}
-#     )
-# argument_string_prod = test['choices'][0]['message']['function_call']['arguments']
-# data = json.loads(argument_string_prod)
-
 def fetch_reponse():
+    """
+       Fetches a sample of entries, generates post ideas based on these, and returns the data used for further processing.
+
+       Returns:
+           dict: Data containing generated posts and other relevant information for appending to a global list.
+       """
     #take new examples each time
     entries_small = random.sample(entries, 5)
     these_examples = "\n".join(f"{index + 1}. {string}" for index, string in enumerate(entries_small))
@@ -157,12 +141,30 @@ def fetch_reponse():
 
 
 def append_posts(data):
+    """
+       Appends generated posts to a global list.
+
+       Args:
+           data (dict): Contains posts to be appended.
+
+       Returns:
+           list: The updated list of posts after appending new posts.
+       """
     for post in data["posts"]:
         posts.append(post)
     return posts
 
 
 def clean_strings(string_list):
+    """
+       Appends generated posts to a global list.
+
+       Args:
+           data (dict): Contains posts to be appended.
+
+       Returns:
+           list: The updated list of posts after appending new posts.
+       """
     cleaned_list = []
     for content in string_list:
         # Check if the string starts with a number followed by '.'
@@ -174,6 +176,15 @@ def clean_strings(string_list):
 
 
 def find_highest_index(directory):
+    """
+       Appends generated posts to a global list.
+
+       Args:
+           data (dict): Contains posts to be appended.
+
+       Returns:
+           list: The updated list of posts after appending new posts.
+       """
     highest = 0
     for filename in os.listdir(directory):
         if filename.startswith("file_") and filename.endswith(".txt"):
@@ -184,6 +195,16 @@ def find_highest_index(directory):
 
 
 def persist_posts(posts_cleaned_up, starting_index_calc):
+    """
+        Writes cleaned posts to text files and a CSV file, starting from a given index.
+
+        Args:
+            posts_cleaned_up (list): List of cleaned posts to be persisted.
+            starting_index_calc (int): Starting index for file naming.
+
+        Notes:
+            This function performs file operations, creating a new file for each post and appending to a CSV file.
+        """
     for index, string in enumerate(posts_cleaned_up, start=starting_index_calc + 1):
         filename = os.path.join(output_dir, f"file_{index}.txt")
         with open(filename, 'w', encoding='utf-8') as file:
@@ -202,6 +223,7 @@ def persist_posts(posts_cleaned_up, starting_index_calc):
 
 
 # def read_files_in_directory(directory):
+
 #     all_texts = []
 #     for filename in os.listdir(directory):
 #         if filename.endswith(".txt"):

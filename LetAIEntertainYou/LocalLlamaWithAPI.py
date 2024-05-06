@@ -1,10 +1,23 @@
-from gpt4all import GPT4All
+"""
+dieses vicuna modell ist llama2 basiert, bringt eine openAI kombatible schnittstelle und unterstützt function calls
+funktionert alles in allem gut, ist aber wenig performant und nur mit gewissen aufwand zu installieren
+https://huggingface.co/lmsys/vicuna-7b-v1.5
+es sei bemerkt, dass die browseroberflöche nicht funktioniert, alles andere aber schon.
+der api dienst kann mit
+python -m fastchat.serve.openai_api_server --host localhost --port 8000
+gestartet werden. funktioniert für mich nur mit diesem modell: vicuna-7b-v1.5
+"""
+
+
+
+import openai
 import csv
-import random
+from gpt4all import GPT4All
 
-from LetAIEntertainYou.Llama3Posts import entries_2
+openai.api_key = "EMPTY"
+openai.base_url = "http://localhost:8000/v1/"
 
-model = GPT4All('Meta-Llama-3-8B-Instruct.Q4_0.gguf')
+model = "vicuna-7b-v1.5"
 
 filename = './LetAIEntertainYou/Posts/current/posts_neu.csv'
 liste = []
@@ -13,7 +26,11 @@ with open(filename, newline='') as csvfile:
     for i, row in enumerate(reader):
         liste.append(row[0])
 
-set_of_instructions = """We will send an email containing a post from a Nextdoor user. We want to use the most interesting part of the post as an email subject line.
+liste.pop(0)
+llama2_posts = []
+
+set_of_instruction = """
+    We will send an email containing a post from a Nextdoor user. We want to use the most interesting part of the post as an email subject line.
     Task description: Given a post, output the most interesting phrase in the post.
     Here are the requirements:
     1. Extract the phrase as-is. Do not change any single character.
@@ -30,37 +47,38 @@ set_of_instructions = """We will send an email containing a post from a Nextdoor
     12. Do not use people’s names in the subject line.
     13. Do not add "Subject line:" in the output. Just output the content of the subject line.
     14. Capitalize the first character of the subject line. If the part you selected starts with a lower-cased character, capitalize the character.
-"""
+    """
+
+for i in range(0, 2):
+    row = liste[i]
+    completion = openai.chat.completions.create(
+        model=model,
+        messages=[
+            {
+                "role": "user",
+                "content": f"Please generate a subject line for the following post: \n\n {row} \n\n Based on the following set of rules: \n\n {set_of_instruction}",
+            }
+        ]
+    )
+    llama2_posts.append(completion.choices[0].message.content)
+print(llama2_posts)
+# print the completion
+#print(completion.choices[0].message.content)
 
 
-examples=entries_2
 
-more_posts = []
+#experiment mit anderem modell, welche function calls unterstützt und nicht den attention mask bug aufweist, buuuuut.....
 
-liste_small = random.sample(liste, 3)
-provided_string = "\n".join(f" {i + 1}. {entry}" for i, entry in enumerate(liste_small))
+model_2 = GPT4All('Meta-Llama-3-8B-Instruct.Q4_0')
 
-prompt = f"Write a post with a structure very similar to the examples provided in {provided_string}. Only write the post without any explanation"
-
-output = model.generate("<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n\n" + prompt +
-                        "<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n")
+prompt_3 = f"""[{{
+    "role": "system",
+    "content": "You are a LLM that generates a subject line for a given post while following the following set of rules. Your Output is only the generated subject line"
+}}, {{
+    "role": "user",
+    "content": "Please generate a subject line for the following post: \\n\\n {row} \\n\\n Based on the following set of rules: \\n\\n {set_of_instruction}"
+}}]"""
+print(prompt_3)
+output = model_2.generate(prompt_3)
 print(output)
-
-for i in range(0, 50):
-    liste_small = random.sample(examples, 3)
-    provided_string = "\n".join(f" {i + 1}. {entry}" for i, entry in enumerate(liste_small))
-
-    prompt = f"{provided_string} contains 3 examples. Write 10 more posts very similar in structure. Chose different content. Only write the posts without any explanation or anything else."
-
-    output = model.generate("<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n\n" + prompt +
-                            "<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n")
-    print(output)
-    more_posts.append(output)
-print('fertig')
-print(len(more_posts))
-
-
-prompt= "What is a function call with JSON in the context of llms?"
-output = model.generate("<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n\n" + prompt +
-                        "<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n")
-print(output)
+#...this model is shit

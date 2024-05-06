@@ -1,3 +1,8 @@
+"""
+Erste Versuche zum Erstellen vom Betreffzeilen
+"""
+
+
 import openai
 import yaml
 import json
@@ -13,7 +18,7 @@ openai.api_key = yaml.safe_load(open("./LetAIEntertainYou/config.yml")).get('KEY
 model_dev = 'gpt-3.5-turbo-0125'
 model = 'gpt-4-turbo-2024-04-09'
 
-filename = './LetAIEntertainYou/Posts/posts.csv'
+filename = './LetAIEntertainYou/Posts/current/posts_neu.csv'
 liste = []
 generated = []
 generated_dev=[]
@@ -52,7 +57,19 @@ the character
 
 
 #um gpt3 nicht zu überfordern, zunächst 100 einträge
+
 def split_into_lists(full_list, chunk_size=10):
+    """
+        Splits a given list into smaller sublists of specified size.
+        Wird benutzt, um handelbare Listen zu übergabe an GPT3/4 zu erzeugen
+        Args:
+            full_list (list): The list to be split.
+            chunk_size (int): The size of each sublist. Defaults to 10 if not provided.
+
+        Returns:
+            list of lists: A list containing the sublists, where each sublist is of size 'chunk_size' except possibly the last one.
+        """
+    ...
     # List to store the smaller lists
     sublists = []
 
@@ -95,7 +112,8 @@ functions = [
     }
 ]
 
-for i in range(34,37):
+#wurde genutzt, um gpt3 als base generator zu nehmen. chunks wichtig, damit reihenfolge erhalten bleibt
+for i in range(0,1):
     sublist = result_lists[i]
     provided_string = "\n".join(f" {i + 1}. {entry}" for i, entry in enumerate(sublist))
     test = openai.ChatCompletion.create(
