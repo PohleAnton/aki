@@ -117,3 +117,16 @@ print("Confusion Matrix:")
 print(confusion_matrix(all_targets, all_predictions))
 print("\nClassification Report:")
 print(classification_report(all_targets, all_predictions))
+
+
+#tokenization und embedding: nur einmal nötig
+def text_to_vector(text):
+    with torch.no_grad():
+        text = str(text)
+        inputs = tokenizer(text, return_tensors='pt', padding=True, truncation=True, max_length=512)
+        outputs = model(**inputs)
+        embeddings = outputs.last_hidden_state.mean(dim=1)
+    return embeddings.squeeze()
+
+df_2['Vector A'] = df_2['Subject Line A'].apply(lambda x: text_to_vector(x).numpy())
+df_2['Vector B'] = df_2['Subject Line B'].apply(lambda x: text_to_vector(x).numpy())
