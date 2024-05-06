@@ -3,10 +3,10 @@ import os
 import pandas as pd
 
 # Path to the input CSV file
-input_csv_path = 'LetAIEntertainYou/Posts/current/llama3base_rules_2.csv'
+input_csv_path = 'LetAIEntertainYou/Posts/current/reverse_bias_fullpromptforcomparison.csv'
 
 # Directory to store the output CSV files
-output_directory = 'LetAIEntertainYou/posts/current/chunks'
+output_directory = 'LetAIEntertainYou/posts/current/chunks/_reverse_fullprompt'
 os.makedirs(output_directory, exist_ok=True)
 
 
@@ -14,7 +14,7 @@ records_per_file = 100
 
 def split_csv():
     try:
-        with open(input_csv_path, mode='r', newline='', encoding='windows-1252', errors='replace') as file:
+        with open(input_csv_path, mode='r', newline='', encoding='iso-8859-1', errors='replace') as file:
             reader = csv.reader(file, delimiter=';')
             header = next(reader)
 
@@ -40,7 +40,7 @@ def split_csv():
 
 def write_to_file(records, header, file_count):
     output_file_path = os.path.join(output_directory, f'output_{file_count}.csv')
-    with open(output_file_path, mode='w', newline='', encoding='utf-8') as file:  # Using UTF-8 for output
+    with open(output_file_path, mode='w', newline='', encoding='iso-8859-1') as file:  # Using UTF-8 for output
         writer = csv.writer(file, delimiter=';')
         writer.writerow(header)
         try:

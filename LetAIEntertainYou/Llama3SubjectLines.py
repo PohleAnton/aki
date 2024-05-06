@@ -14,7 +14,7 @@ unabhängig davon sind geschwindigkeit und qualität des outputs aber sehr gut, 
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import pandas as pd
-
+import csv
 
 model_id = "hiieu/Meta-Llama-3-8B-Instruct-function-calling-json-mode"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
