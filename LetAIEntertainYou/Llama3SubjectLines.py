@@ -199,5 +199,5 @@ for i in range(min(2793, len(df))):
     if pd.notna(df.loc[i, 'Posts']):
         df.at[i, 'Subject Line A'] = gen_llame_2(df.at[i, 'Posts'])
 
-df.to_csv('LetAIEntertainYou/Posts/current/more_judged_2', sep=';', encoding='utf-8', index=False)
+df.to_csv('LetAIEntertainYou/Posts/current/more_judged_2.csv', sep=';', encoding='utf-8', index=False)
 print('fertig')
