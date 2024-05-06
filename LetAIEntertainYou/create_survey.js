@@ -1,4 +1,5 @@
-#zu dokuzwecken
+#zu dokuzwecken; dieser code kann verwendet werden, um aus einem googlesheet eine umfrage zu erstellem
+#-->A/B Daten
 
 function createFormQuestions() {
 

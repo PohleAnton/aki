@@ -9,13 +9,20 @@ input_csv_path = 'LetAIEntertainYou/Posts/llama_und_ChatGPT_unbloat.csv'
 output_directory = 'LetAIEntertainYou/csvchunks/both'
 os.makedirs(output_directory, exist_ok=True)
 
-# Number of records per file (excluding the header)
+
 records_per_file = 50
 
 def split_csv():
+    """
+       Reads records from a CSV file, splits them into multiple files based on a preset number of records per file.
+
+       This function assumes that the CSV file uses a semicolon (;) as a delimiter. It processes each row from the
+       input CSV file and writes out a new CSV file whenever the number of records reaches a predefined limit (`records_per_file`).
+       Any remaining records after processing in batches are written to a final CSV file.
+       """
     with open(input_csv_path, mode='r', newline='', encoding='utf-8') as file:
         reader = csv.reader(file, delimiter=';')
-        header = next(reader)  # Read the first line as header
+        header = next(reader)
 
         # Initialize
         file_count = 1
@@ -29,16 +36,28 @@ def split_csv():
                 file_count += 1
                 records = []
 
-        # Write any remaining records to a new file
+
         if records:
             write_to_file(records, header, file_count)
 
 def write_to_file(records, header, file_count):
+    """
+       Writes a list of records to a CSV file, including a header at the top of the file.
+
+       Args:
+           records (list): List of records to write to the file.
+           header (list): The header row for the CSV file.
+           file_count (int): A counter used to number and distinguish each output file.
+
+       This function writes the records to a new CSV file in the specified output directory. Each output file is named
+       according to its sequence number (`file_count`). The function assumes that the output directory is already specified
+       in `output_directory`.
+       """
     output_file_path = os.path.join(output_directory, f'output_{file_count}.csv')
     with open(output_file_path, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file, delimiter=';')
-        writer.writerow(header)  # Write the header
-        writer.writerows(records)  # Write the batch of records
+        writer.writerow(header)
+        writer.writerows(records)
 
 if __name__ == '__main__':
     split_csv()
@@ -595,10 +614,9 @@ count_B = three_20.count('B')
 
 all_threes=[]
 
-for i in range(1, 22):  # From single_1 to single_14
+for i in range(1, 22):
     list_name = f'three_{i}'
     print(list_name)
-    # Retrieve the list using its name from the globals dictionary
     current_list = globals().get(list_name, [])
     all_threes.extend(current_list)
 count_A = all_threes.count('A')

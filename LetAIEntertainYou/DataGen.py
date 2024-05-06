@@ -1,3 +1,11 @@
+"""
+https://chat.openai.com/share/3a7cfe4f-23ab-4fb7-88e6-42ae640a586b
+
+um groundtruth zu simulieren, müssen zunächst posts erstellt werden. die erste sammlung findet sich hier
+
+"""
+
+
 import random
 import re
 
