@@ -6,7 +6,7 @@ import pandas as pd
 input_csv_path = 'LetAIEntertainYou/Posts/current/reverse_bias_fullpromptforcomparison.csv'
 
 # Directory to store the output CSV files
-output_directory = 'LetAIEntertainYou/posts/current/chunks/_reverse_fullprompt'
+output_directory = 'LetAIEntertainYou/posts/current/chunks/reverse_fullprompt'
 os.makedirs(output_directory, exist_ok=True)
 
 
