@@ -13,7 +13,7 @@ data = pd.read_csv('LetAIEntertainYou/Posts/post_llama_base_judged.csv', delimit
 data['label'] = (data['Target'] == 'B').astype(int)
 data.reset_index(drop=True, inplace=True)
 
-#model laden:
+#model laden - achtung, dies ist das mit weniger datensätzen:
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
 model.load_state_dict(torch.load('LetAIEntertainYou/Models/pointwise_little_data_dict.pth'))
 
@@ -164,5 +164,6 @@ result = predict_subject_line_engagement("Hey neighbors! Just spotted a set of k
 print(result)
 
 
-torch.save(model, 'LetAIEntertainYou/Models/pointwise_little_data.pth' )
-torch.save(model.state_dict(), 'LetAIEntertainYou/Models/pointwise_little_data_dict.pth')
+#nicht in github...nimmt zu viel speicher
+#torch.save(model, 'LetAIEntertainYou/Models/pointwise_little_data.pth' )
+#torch.save(model.state_dict(), 'LetAIEntertainYou/Models/pointwise_little_data_dict.pth')

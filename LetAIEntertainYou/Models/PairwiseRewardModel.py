@@ -17,6 +17,8 @@ model = BertModel.from_pretrained('bert-base-uncased')
 model.eval()
 
 #embeddings für daten schon gemacht, können so geladen werden:
+#müssen mit dem größeren datensatz erneut gemacht werden...
+
 with open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_a.pkl', 'rb') as f:
     vector_a = pickle.load(f)
 
