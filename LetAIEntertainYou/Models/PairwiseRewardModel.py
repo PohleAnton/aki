@@ -130,5 +130,26 @@ def text_to_vector(text):
         embeddings = outputs.last_hidden_state.mean(dim=1)
     return embeddings.squeeze()
 
+df_2 = pd.read_csv('LetAIEntertainYou/Posts/current/posts_rules_base_judged_neu.csv', delimiter=';', encoding="utf-8")
+
 df_2['Vector A'] = df_2['Subject Line A'].apply(lambda x: text_to_vector(x).numpy())
 df_2['Vector B'] = df_2['Subject Line B'].apply(lambda x: text_to_vector(x).numpy())
+
+### Überführung in Pickle-files
+import pickle
+
+data_a = []
+df_2['Vector A'].apply(lambda x: data_a.append(x))
+
+data_b = []
+df_2['Vector B'].apply(lambda x: data_b.append(x))
+
+# Vector A
+file = open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_a_neu.pkl', 'wb')
+pickle.dump(data_a, file)
+file.close()
+
+# Vector B
+file = open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_b_neu.pkl', 'wb')
+pickle.dump(data_b, file)
+file.close()
