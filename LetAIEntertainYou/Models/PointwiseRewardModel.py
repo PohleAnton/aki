@@ -6,16 +6,18 @@ from transformers import BertTokenizer, BertForSequenceClassification
 import torch
 from sklearn.model_selection import train_test_split
 from torch import no_grad
+import os
 
+os.chdir('../')
+os.chdir('../')
 
-
-data = pd.read_csv('LetAIEntertainYou/Posts/post_llama_base_judged.csv', delimiter=';')
+data = pd.read_csv('LetAIEntertainYou/Posts/current/posts_rules_base_judged_neu.csv', delimiter=';')
 data['label'] = (data['Target'] == 'B').astype(int)
 data.reset_index(drop=True, inplace=True)
 
 #model laden - achtung, dies ist das mit weniger datensätzen:
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
-model.load_state_dict(torch.load('LetAIEntertainYou/Models/pointwise_little_data_dict.pth'))
+#model.load_state_dict(torch.load('LetAIEntertainYou/Models/pointwise_little_data_dict.pth'))
 
 
 #mit dem folgenden code wurde auf grundlage des 1016 einträge datensatzes ein modell mit 93 genauigkeit trainiert
