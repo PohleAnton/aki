@@ -16,12 +16,12 @@ data['label'] = (data['Target'] == 'B').astype(int)
 data.reset_index(drop=True, inplace=True)
 
 #model laden - achtung, dies ist das mit weniger datensätzen:
-model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
+model = BertForSequenceClassification.from_pretrained('bert-base-cased', num_labels=2)
 #model.load_state_dict(torch.load('LetAIEntertainYou/Models/pointwise_little_data_dict.pth'))
 
 
 #mit dem folgenden code wurde auf grundlage des 1016 einträge datensatzes ein modell mit 93 genauigkeit trainiert
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 
 class SubjectLineDataset(Dataset):
     def __init__(self, dataframe, tokenizer, max_len):
@@ -86,7 +86,7 @@ test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, dro
 
 device = torch_device("cuda" if torch.cuda.is_available() else "cpu")
 # Model
-model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
+model = BertForSequenceClassification.from_pretrained('bert-base-cased', num_labels=2)
 model.to(device)
 
 # Optimizer
