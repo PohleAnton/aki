@@ -9,11 +9,12 @@ Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
 der dazu führt, dass das modell einfach immer weiter generiert, daher wird die range für die betreffzeilen weiter unten auch begrenzt
 unabhängig davon sind geschwindigkeit und qualität des outputs aber sehr gut, deswegen wird dies voererst in kauf genommen
 """
-
+import os
 
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import pandas as pd
+from accelerate import disk_offload
 import csv
 
 model_id = "hiieu/Meta-Llama-3-8B-Instruct-function-calling-json-mode"
@@ -23,6 +24,7 @@ model = AutoModelForCausalLM.from_pretrained(
     torch_dtype=torch.bfloat16,
     device_map="auto",
 )
+
 
 set_of_instruction = """
     We will send an email containing a post from a Nextdoor user. We want to use the most interesting part of the post as an email subject line.
@@ -61,9 +63,7 @@ functions_metadata = [
         }
     }
 ]
-
-df = pd.read_csv("LetAIEntertainYou/Posts/posts_neu.csv", encoding='cp1252', sep=";")
-
+df = pd.read_csv("Posts/current/posts_best_of_n.csv", encoding='utf-8', sep=";")
 
 def gen_llame(row):
     """
@@ -74,14 +74,15 @@ def gen_llame(row):
        Returns:
            base line generated subjectline
        """
+    example = "[Subject line A; Subject line B; Subject line C; Subject line D; Subject line E]"
     messages = [
         {
             "role": "system",
-            "content": f"You are a  LLM that generates a subject line for a given post while following the following set of rules: \n\n {set_of_instruction} \n\n Your Output is only the generated subject line without any further comments."
+            "content": f"You are a LLM that generates five different subject lines for a given post while following the following set of rules: \n\n {set_of_instruction} \n\n Your Output are only the generated subject lines without any further comments. Please format your response according to the following example: {example}. The instructions apply for each subject line, so your response can have more than 10 words."
         },
         {
             "role": "user",
-            "content": f"Please generate a subject line for the following post: \n\n {row} \n\n Based on the following set of rules: \n\n {set_of_instruction}",
+            "content": f"Please generate five subject lines for the following post: \n\n {row} \n\n Based on the following set of rules: \n\n {set_of_instruction}",
         }
     ]
     input_ids = tokenizer.apply_chat_template(
@@ -89,7 +90,6 @@ def gen_llame(row):
         add_generation_prompt=True,
         return_tensors="pt"
     ).to(model.device)
-
 
     terminators = [
         tokenizer.eos_token_id,
@@ -106,22 +106,26 @@ def gen_llame(row):
     )
     response = outputs[0][input_ids.shape[-1]:]
     res = tokenizer.decode(response, skip_special_tokens=True)
+    """
     if len(res.split(" ")) > 10:
-        res = ' '.join(res.split(" ")[0:10]) + '...'
-    print(res)
+    res = ' '.join(res.split(" ")[0:10]) + '...'
+    """
     return res
-
-
 
 
 #irgendwas weirdes mit attention mask...
 for i in range(min(2793, len(df))):
     if pd.notna(df.loc[i, 'Posts']):  # Check if 'Posts' at row i is not NaN
-        df.at[i, 'Subject Line A'] = gen_llame(df.at[i, 'Posts'])
+        res = gen_llame(df.loc[i, 'Posts']).replace("[", "").replace("]", "").split(";")
+        df.at[i, 'Subject Line A'] = res[0]
+        df.at[i, 'Subject Line B'] = res[1]
+        df.at[i, 'Subject Line C'] = res[2]
+        df.at[i, 'Subject Line D'] = res[3]
+        df.at[i, 'Subject Line E'] = res[4]
+        print(df.iloc[i, ])
 
-df.to_csv('LetAIEntertainYou/Posts/current/more_judged', sep=';', encoding='utf-8', index=False)
+df.to_csv('Posts/current/posts_best_of_n.csv', sep=';', encoding='utf-8', index=False)
 print('fertig')
-
 
 '''
 dies ist das original set of instructions - er sollen auch einmal damit daten erzeugt werden.
@@ -158,14 +162,15 @@ def gen_llame_2(row):
            Returns:
                base line generated subjectline
            """
+    example = "[Subject line A; Subject line B; Subject line C; Subject line D; Subject line E]"
     messages = [
         {
             "role": "system",
-            "content": f"You are a  LLM that generates a subject line for a given post while following the following set of rules: \n\n {set_of_instruction_2} \n\n Your Output is only the generated subject line without any further comments."
+            "content": f"You are a LLM that generates five different subject lines for a given post while following the following set of rules: \n\n {set_of_instruction_2} \n\n Your Output are only the generated subject lines without any further comments. Please format your response according to the following example: {example}. The instructions apply for each subject line, so your response can have more than 10 words."
         },
         {
             "role": "user",
-            "content": f"Please generate a subject line for the following post: \n\n {row} \n\n Based on the following set of rules: \n\n {set_of_instruction_2}",
+            "content": f"Please generate five subject lines for the following post: \n\n {row} \n\n Based on the following set of rules: \n\n {set_of_instruction_2}",
         }
     ]
 
@@ -195,9 +200,16 @@ def gen_llame_2(row):
     return res
 
 
+
 for i in range(min(2793, len(df))):
     if pd.notna(df.loc[i, 'Posts']):
-        df.at[i, 'Subject Line A'] = gen_llame_2(df.at[i, 'Posts'])
+        res = gen_llame_2(df.loc[i, 'Posts']).replace("[", "").replace("]", "").split(";")
+        df.at[i, 'Subject Line A'] = res[0]
+        df.at[i, 'Subject Line B'] = res[1]
+        df.at[i, 'Subject Line C'] = res[2]
+        df.at[i, 'Subject Line D'] = res[3]
+        df.at[i, 'Subject Line E'] = res[4]
+        print(df.iloc[i,])
 
-df.to_csv('LetAIEntertainYou/Posts/current/more_judged_2.csv', sep=';', encoding='utf-8', index=False)
+df.to_csv('LetAIEntertainYou/Posts/current/posts_best_of_n_2.csv', sep=';', encoding='utf-8', index=False)
 print('fertig')
