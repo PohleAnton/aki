@@ -63,76 +63,9 @@ functions_metadata = [
         }
     }
 ]
-df = pd.read_csv("Posts/current/posts_best_of_n.csv", encoding='utf-8', sep=";")
+df = pd.read_csv("LetAIEntertainYou/Posts/current/posts_best_of_n.csv", encoding='utf-8', sep=";")
 
-def gen_llame(row):
-    """
-       Generiert eine base subject line
-
-       Args:
-           row (str): ein post, aus dem eine betreffzeile erzeugt wird
-       Returns:
-           base line generated subjectline
-       """
-    example = "[Subject line A; Subject line B; Subject line C; Subject line D; Subject line E]"
-    messages = [
-        {
-            "role": "system",
-            "content": f"You are a LLM that generates five different subject lines for a given post while following the following set of rules: \n\n {set_of_instruction} \n\n Your Output are only the generated subject lines without any further comments. Please format your response according to the following example: {example}. The instructions apply for each subject line, so your response can have more than 10 words."
-        },
-        {
-            "role": "user",
-            "content": f"Please generate five subject lines for the following post: \n\n {row} \n\n Based on the following set of rules: \n\n {set_of_instruction}",
-        }
-    ]
-    input_ids = tokenizer.apply_chat_template(
-        messages,
-        add_generation_prompt=True,
-        return_tensors="pt"
-    ).to(model.device)
-
-    terminators = [
-        tokenizer.eos_token_id,
-        tokenizer.convert_tokens_to_ids("<|eot_id|>")
-    ]
-
-    outputs = model.generate(
-        input_ids,
-        max_new_tokens=256,
-        eos_token_id=terminators,
-        do_sample=True,
-        temperature=0.6,
-        top_p=0.9,
-    )
-    response = outputs[0][input_ids.shape[-1]:]
-    res = tokenizer.decode(response, skip_special_tokens=True)
-    """
-    if len(res.split(" ")) > 10:
-    res = ' '.join(res.split(" ")[0:10]) + '...'
-    """
-    return res
-
-
-#irgendwas weirdes mit attention mask...
-for i in range(min(2793, len(df))):
-    if pd.notna(df.loc[i, 'Posts']):  # Check if 'Posts' at row i is not NaN
-        res = gen_llame(df.loc[i, 'Posts']).replace("[", "").replace("]", "").split(";")
-        df.at[i, 'Subject Line A'] = res[0]
-        df.at[i, 'Subject Line B'] = res[1]
-        df.at[i, 'Subject Line C'] = res[2]
-        df.at[i, 'Subject Line D'] = res[3]
-        df.at[i, 'Subject Line E'] = res[4]
-        print(df.iloc[i, ])
-
-df.to_csv('Posts/current/posts_best_of_n.csv', sep=';', encoding='utf-8', index=False)
-print('fertig')
-
-'''
-dies ist das original set of instructions - er sollen auch einmal damit daten erzeugt werden.
-diese sind allerdings häufig identisch oder wenigstens sehr an nah an den regelbasierten ergebnissen, deswegen werden 2 datensätze erzeugt
-'''
-
-set_of_instruction_2 = """
+set_of_instruction = """
     We will send an email containing a post from a Nextdoor user. We want to use the most interesting part of the post as an email subject line.
     Task description: Given a post, output the most interesting phrase in the post.
     Here are the requirements:
@@ -153,7 +86,7 @@ set_of_instruction_2 = """
     """
 
 
-def gen_llame_2(row):
+def gen_llame(row):
     """
            Generiert eine base subject line
 
@@ -199,17 +132,87 @@ def gen_llame_2(row):
     print(res)
     return res
 
-
-
-for i in range(min(2793, len(df))):
+#column_nam es wird hier sehr lang gewählt, weil das modell manchmal mehr als 5 einträge erzeugt
+column_names=['Subject line A', 'Subject line B', 'Subject line C', 'Subject line D', 'Subject line E', 'Subject line F', 'Subject line G', 'Subject line H','Subject line I','Subject line J','Subject line K','Subject line L','Subject line M', ]
+new_df =pd.DataFrame(columns=column_names)
+#setzt hier examplarisch nach einem error ein
+for i in range(2122, 2701):
     if pd.notna(df.loc[i, 'Posts']):
-        res = gen_llame_2(df.loc[i, 'Posts']).replace("[", "").replace("]", "").split(";")
-        df.at[i, 'Subject Line A'] = res[0]
-        df.at[i, 'Subject Line B'] = res[1]
-        df.at[i, 'Subject Line C'] = res[2]
-        df.at[i, 'Subject Line D'] = res[3]
-        df.at[i, 'Subject Line E'] = res[4]
-        print(df.iloc[i,])
+        output = gen_llame(df.loc[i, 'Posts'])
+        output = output.replace("[", "").replace("]", "").split(";")
+        output = [x.strip() for x in output]  # Clean any whitespace from the splits
+        row_data = pd.Series(output, index=column_names[:len(output)])
+        row_df = pd.DataFrame([row_data])
+        new_df = pd.concat([new_df, row_df], ignore_index=True)
+        print(row_data)
 
-df.to_csv('LetAIEntertainYou/Posts/current/posts_best_of_n_2.csv', sep=';', encoding='utf-8', index=False)
-print('fertig')
+
+def gen_llame_single(row):
+    """
+           5 Zeilen generieren funktioniert nicht zuverlässig genug, daher wird 1 versucht
+
+           Args:
+               row (str): ein post, aus dem eine betreffzeile erzeugt wird
+           Returns:
+               base line generated subjectline
+           """
+
+    messages = [
+        {
+            "role": "system",
+            "content": f"You are a  LLM that generates a subject line for a given post while following the following set of rules: \n\n {set_of_instruction_2} \n\n Your Output is only the generated subject line without any further comments."
+        },
+        {
+            "role": "user",
+            "content": f"Please generate a subject line for the following post: \n\n {row} \n\n Based on the following set of rules: \n\n {set_of_instruction_2}",
+        }
+    ]
+
+    input_ids = tokenizer.apply_chat_template(
+        messages,
+        add_generation_prompt=True,
+        return_tensors="pt"
+    ).to(model.device)
+
+    terminators = [
+        tokenizer.eos_token_id,
+        tokenizer.convert_tokens_to_ids("<|eot_id|>")
+    ]
+
+    outputs = model.generate(
+        input_ids,
+        max_new_tokens=256,
+        eos_token_id=terminators,
+        do_sample=True,
+        temperature=0.6,
+        top_p=0.9,
+    )
+    response = outputs[0][input_ids.shape[-1]:]
+    res = tokenizer.decode(response, skip_special_tokens=True)
+
+    print(res)
+    return res
+
+
+
+
+#diese zeilen wurden fehlerhaft erzeug
+missing=[2626,2594,2569,2522,2503,2474,2239,2192,2189,2161,2060,2061,2025,1714,1708,1682,1672,1667,1587,1571,1487,1439,1432,1405,1395,1336,1225,1216,1211,1182,1100,1092,1031,972,106,1052,1087,]
+new_missing=[x - 2 for x in missing]
+new_missing.sort()
+subject_line_cols = ['Subject Line A', 'Subject Line B', 'Subject Line C', 'Subject Line D', 'Subject Line E']
+
+results_df = pd.DataFrame()
+for i in new_missing:
+    if i < len(df) and pd.notna(df.loc[i, 'Posts']):
+        new_row = {}
+        for col in subject_line_cols:
+            new_row[col] = gen_llame_single(df.loc[i, 'Posts'])
+
+        row_df = pd.DataFrame([new_row])
+        results_df = pd.concat([results_df, row_df], ignore_index=True)
+        print(row_df)
+
+
+#results_df.to_csv('LetAIEntertainYou/Posts/current/posts_best_of_n_2_9.csv', sep=';', encoding='utf-8', index=False)
+
