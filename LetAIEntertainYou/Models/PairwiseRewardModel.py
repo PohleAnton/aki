@@ -140,10 +140,13 @@ def text_to_vector(text):
     return embeddings.squeeze()
 
 ### Bei mir konnte utf-8 einige Bytes nicht dekodieren, deshalb habe ich eine Kopie angelegt, wo ich diese durch utf-8 freundliche Äquivalente ersetzt
-df_2 = pd.read_csv('LetAIEntertainYou/Posts/current/posts_rules_base_judged_neu.csv', delimiter=';', encoding="utf-8")
+df_2 = pd.read_csv('LetAIEntertainYou/Posts/current/posts_best_of_n_complete.csv', delimiter=';', encoding="utf-8")
 
 df_2['Vector A'] = df_2['Subject Line A'].apply(lambda x: text_to_vector(x).numpy())
 df_2['Vector B'] = df_2['Subject Line B'].apply(lambda x: text_to_vector(x).numpy())
+df_2['Vector C'] = df_2['Subject Line C'].apply(lambda x: text_to_vector(x).numpy())
+df_2['Vector D'] = df_2['Subject Line D'].apply(lambda x: text_to_vector(x).numpy())
+df_2['Vector E'] = df_2['Subject Line E'].apply(lambda x: text_to_vector(x).numpy())
 df_2['Vector Posts'] = df_2['Posts'].apply(lambda x: text_to_vector(x).numpy())
 
 ### Überführung in Pickle-files
@@ -155,21 +158,42 @@ df_2['Vector A'].apply(lambda x: data_a.append(x))
 data_b = []
 df_2['Vector B'].apply(lambda x: data_b.append(x))
 
+data_c = []
+df_2['Vector C'].apply(lambda x: data_c.append(x))
+
+data_d = []
+df_2['Vector D'].apply(lambda x: data_d.append(x))
+
+data_e = []
+df_2['Vector E'].apply(lambda x: data_e.append(x))
+
 data_posts = []
 df_2['Vector Posts'].apply(lambda x: data_posts.append(x))
 
 # Vector A
-file = open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_a_neu.pkl', 'wb')
+file = open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_a_best_of_n.pkl', 'wb')
 pickle.dump(data_a, file)
 file.close()
 
 # Vector B
-file = open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_b_neu.pkl', 'wb')
+file = open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_b_best_of_n.pkl', 'wb')
 pickle.dump(data_b, file)
 file.close()
 
+file = open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_c_best_of_n.pkl', 'wb')
+pickle.dump(data_c, file)
+file.close()
+
+file = open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_d_best_of_n.pkl', 'wb')
+pickle.dump(data_d, file)
+file.close()
+
+file = open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_e_best_of_n.pkl', 'wb')
+pickle.dump(data_e, file)
+file.close()
+
 # Vector Posts
-file = open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_posts.pkl', 'wb')
+file = open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_posts_best_of_n.pkl', 'wb')
 pickle.dump(data_posts, file)
 file.close()
 """
