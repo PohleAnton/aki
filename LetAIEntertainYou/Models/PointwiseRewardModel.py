@@ -7,11 +7,11 @@ import torch
 from sklearn.model_selection import train_test_split
 from torch import no_grad
 import os
-
+print(os)
 #os.chdir('../')
 #os.chdir('../')
 
-data = pd.read_csv('LetAIEntertainYou/Posts/current/posts_best_of_n.csv', delimiter=';')
+data = pd.read_csv('LetAIEntertainYou/Posts/current/posts_best_of_n_complete_with_target.csv', delimiter=';', encoding="utf-8")
 ### Rausgenommen, weil es jetzt 5 subject lines gibt
 #data['label'] = (data['Target'] == 'B').astype(int)
 data.reset_index(drop=True, inplace=True)
@@ -41,7 +41,7 @@ class SubjectLineDataset(Dataset):
         subject_line_d = str(self.data.iloc[index]['Subject Line D'])
         subject_line_e = str(self.data.iloc[index]['Subject Line E'])
         #label = int(self.data.iloc[index]['label'])
-        label = int(self.data.iloc[index]['Target'])
+        label = str(self.data.iloc[index]['Target'])
 
         inputs_a = self.tokenizer.encode_plus(
             post + " [SEP] " + subject_line_a,
@@ -93,18 +93,23 @@ class SubjectLineDataset(Dataset):
             case "A":
                 ids = inputs_a['input_ids']
                 mask = inputs_a['attention_mask']
+                label = 0
             case "B":
                 ids = inputs_b['input_ids']
                 mask = inputs_b['attention_mask']
+                label = 1
             case "C":
                 ids = inputs_c['input_ids']
                 mask = inputs_c['attention_mask']
+                label = 2
             case "D":
                 ids = inputs_d['input_ids']
                 mask = inputs_d['attention_mask']
+                label = 3
             case "E":
                 ids = inputs_e['input_ids']
                 mask = inputs_e['attention_mask']
+                label = 4
             case _:
                 ids = ""
                 mask = ""
@@ -196,8 +201,16 @@ test_accuracy = evaluate_model(model, test_loader, device)
 print(f"Test Accuracy: {test_accuracy:.2f}")
 
 
-def predict_subject_line_engagement(post, subject_line_a, subject_line_b, subject_line_c, subject_line_d,
-                                    subject_line_e):
+df = pd.read_csv('LetAIEntertainYou/Posts/current/posts_best_of_n_complete.csv', delimiter=';', encoding="utf-8")
+def predict_subject_line_engagement(row):
+
+    post = row["Posts"]
+    subject_line_a = row["Subject Line A"]
+    subject_line_b = row["Subject Line B"]
+    subject_line_c = row["Subject Line C"]
+    subject_line_d = row["Subject Line D"]
+    subject_line_e = row["Subject Line E"]
+
     # Tokenize subject lines
     inputs_a = tokenizer.encode_plus(post + " [SEP] " + subject_line_a, return_tensors="pt", padding=True,
                                      truncation=True, max_length=128)
@@ -234,10 +247,12 @@ def predict_subject_line_engagement(post, subject_line_a, subject_line_b, subjec
     else:
         return "Subject Line B is more engaging"
     """
-    return f"Subject Line {list(my_dict.keys())[list(my_dict.values()).index(max(prob_a, prob_b, prob_c, prob_d, prob_e))]} is more engaging"
+    return f"{list(my_dict.keys())[list(my_dict.values()).index(max(prob_a, prob_b, prob_c, prob_d, prob_e))]}"
 
-
+df["Target"] = df.apply(lambda x: predict_subject_line_engagement(x), axis=1)
+df.to_csv('LetAIEntertainYou/Posts/current/posts_best_of_n_complete_with_target.csv', sep=";", encoding="utf-8")
 # Example call
+"""
 result = predict_subject_line_engagement(
     "Hey neighbors! Just spotted a set of keys with a cute turtle keychain near the playground at Parkside Ave. If they're yours or you know whose they might be, please message me here or pick them up at my porch at 153 Parkside Ave. Let's get these keys back to their owner!",
     "Set of keys with a cute turtle keychain near the playground",
@@ -246,6 +261,7 @@ result = predict_subject_line_engagement(
     "Turtle Keychain Found near Playground",
     "Keys with Turtle Keychain Lost")
 print(result)
+"""
 
 #nicht in github...nimmt zu viel speicher
 #torch.save(model, 'LetAIEntertainYou/Models/pointwise_little_data.pth' )
