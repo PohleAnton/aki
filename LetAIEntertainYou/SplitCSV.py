@@ -3,10 +3,11 @@ import os
 import pandas as pd
 
 # Path to the input CSV file
-input_csv_path = 'LetAIEntertainYou/Posts/current/reverse_bias_fullpromptforcomparison.csv'
-
+#input_csv_path = 'LetAIEntertainYou/Posts/current/reverse_bias_fullpromptforcomparison.csv'
+input_csv_path = 'LetAIEntertainYou/Posts/current/EVEN MORE RECENT/posts_rules_base_n_clean.csv'
 # Directory to store the output CSV files
-output_directory = 'LetAIEntertainYou/posts/current/chunks/reverse_fullprompt'
+#output_directory = 'LetAIEntertainYou/posts/current/chunks/reverse_fullprompt'
+output_directory = 'LetAIEntertainYou/posts/current/chunks/n'
 os.makedirs(output_directory, exist_ok=True)
 
 
@@ -618,3 +619,27 @@ count_C = all_threes.count('C')
 df =pd.read_csv('LetAIEntertainYou/Posts/llama_und_base_unbloat.csv',delimiter=';')
 df['judgement'] = all_singles
 df.to_csv('LetAIEntertainYou/Posts/llama_und_base_judged.csv', sep=';',index=False)
+
+os.getcwd()
+file_path = 'LetAIEntertainYou/Posts/current/posts_rules_base_n.csv'
+# Read the CSV file using semicolon as the delimiter
+data = pd.read_csv(file_path, delimiter=';')
+
+# Function to process the subject lines as described
+def process_subject_line(subject_line):
+    if pd.isna(subject_line):
+        return subject_line  # Return NaN as is without processing
+    words = subject_line.split()
+    if len(words) > 10:
+        return ' '.join(words[:10]) + '...'
+    return subject_line
+
+# Apply the function to 'Subject Line B' and 'Subject Line C'
+data['Subject Line B'] = data['Subject Line B'].apply(process_subject_line)
+data['Subject Line C'] = data['Subject Line C'].apply(process_subject_line)
+
+# Save the modified data to a new CSV file
+output_path = 'LetAIEntertainYou/Posts/current/posts_rules_base_n_clean.csv'
+data.to_csv(output_path, index=False, sep=';')
+
+output_path
