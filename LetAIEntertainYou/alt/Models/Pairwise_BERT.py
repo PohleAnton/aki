@@ -81,6 +81,30 @@ class ComparisonModel(nn.Module):
         x = self.dropout2(self.relu2(self.fc2(x)))
         x = self.output(x)
         return x
+class EnhancedComparisonModel(nn.Module):
+    def __init__(self):
+        super(EnhancedComparisonModel, self).__init__()
+        self.fc1 = nn.Linear(2304, 4608)
+        self.relu1 = nn.ReLU()
+        self.dropout1 = nn.Dropout(0.5)
+        self.fc2 = nn.Linear(4608, 3072)
+        self.relu2 = nn.ReLU()
+        self.dropout2 = nn.Dropout(0.5)
+        self.fc3 = nn.Linear(3072, 1536)
+        self.relu3 = nn.ReLU()
+        self.dropout3 = nn.Dropout(0.5)
+        self.output = nn.Linear(1536, 1)
+
+    def forward(self, post, vector_a, vector_b):
+        x = torch.cat((post, vector_a, vector_b), dim=1)
+        x = self.dropout1(self.relu1(self.fc1(x)))
+        x = self.dropout2(self.relu2(self.fc2(x)))
+        x = self.dropout3(self.relu3(self.fc3(x)))
+        x = self.output(x)
+        return x
+
+# Model, Loss, and Optimizer
+model = EnhancedComparisonModel()
 
 
 
@@ -94,7 +118,7 @@ criterion = nn.BCEWithLogitsLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=25, gamma=0.5)
 # Training loop
-num_epochs = 6
+num_epochs = 15
 for epoch in range(num_epochs):
     for posts, vectors_a, vectors_b, targets in train_loader:
         optimizer.zero_grad()
@@ -135,3 +159,46 @@ print("Confusion Matrix:")
 print(confusion_matrix(all_targets, all_predictions))
 print("\nClassification Report:")
 print(classification_report(all_targets, all_predictions))
+
+
+def convert_to_tensor(embedding):
+    return torch.tensor(embedding, dtype=torch.float32)
+
+
+# Apply conversion
+df_2['Vector A'] = df_2['Vector A'].apply(convert_to_tensor)
+df_2['Vector B'] = df_2['Vector B'].apply(convert_to_tensor)
+df_2['Vector Posts'] = df_2['Vector Posts'].apply(convert_to_tensor)
+
+import numpy as np
+import torch
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+
+# Ensure embeddings are numpy arrays
+df_2['Vector A'] = df_2['Vector A'].apply(lambda x: np.array(x))
+df_2['Vector B'] = df_2['Vector B'].apply(lambda x: np.array(x))
+df_2['Vector Posts'] = df_2['Vector Posts'].apply(lambda x: np.array(x))
+
+
+# Function to visualize embeddings
+def visualize_embeddings(df, column, label_column):
+    embeddings = df[column].tolist()
+    embeddings = np.stack(embeddings)
+
+    # Reduce dimensions for visualization
+    pca = PCA(n_components=2)
+    reduced_embeddings = pca.fit_transform(embeddings)
+
+    # Plot
+    plt.figure(figsize=(8, 6))
+    for label in df[label_column].unique():
+        idx = df[df[label_column] == label].index
+        plt.scatter(reduced_embeddings[idx, 0], reduced_embeddings[idx, 1], label=label)
+    plt.legend()
+    plt.title(f'PCA of {column}')
+    plt.show()
+
+
+# Visualize embeddings for 'Vector Posts'
+visualize_embeddings(df_2, 'Vector Posts', 'Target')

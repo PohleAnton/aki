@@ -71,7 +71,7 @@ optimizer = AdamW(model_b.parameters(), lr=1e-5)
 # siehe_ https://github.com/huggingface/transformers/blob/9aeacb58bab321bc21c24bbdf7a24efdccb1d426/src/transformers/modeling_bert.py#L1353-L1360
 # Training loop
 model_b.train()
-for epoch in range(10):
+for epoch in range(20):
     for batch_index, batch_data in enumerate(train_loader):
         ids = batch_data['input_ids'].to(device)
         mask = batch_data['attention_mask'].to(device)
@@ -85,8 +85,6 @@ for epoch in range(10):
 
         if batch_index % 10 == 0:
             print(f"Epoch: {epoch}, Batch: {batch_index}, Loss: {loss.item()}")
-            print(f"Sample Input IDs: {ids[0][:10]}")
-            print(f"Sample Label: {labels[0]}")
 
 print("Training complete")
 
@@ -116,7 +114,7 @@ test_accuracy = evaluate_model(model_b, test_loader, device)
 print(f"Test Accuracy: {test_accuracy:.2f}")
 
 
-model_save_path = "LetAIEntertainYou/Models/persist/BERT_pointwise.pth"
+model_save_path = "LetAIEntertainYou/Models/persist/BERT_pointwise_20_epochs.pth"
 torch.save(model_b.state_dict(), model_save_path)
 print(f"Model saved to {model_save_path}")
 
