@@ -6,6 +6,8 @@ es sei bemerkt, dass die browseroberflöche nicht funktioniert, alles andere abe
 der api dienst kann mit
 python -m fastchat.serve.openai_api_server --host localhost --port 8000
 gestartet werden. funktioniert für mich nur mit diesem modell: vicuna-7b-v1.5
+
+war ein versuch, geht nur auf gpu, deswegen  nicht weiter verwendet - aber sehr cool
 """
 
 

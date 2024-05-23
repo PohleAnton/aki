@@ -73,6 +73,6 @@ def process_posts(input_csv_path, output_csv_path):
 
 
 # Usage
-input_csv_path = 'LetAIEntertainYou/Posts/current/posts_neu.csv'
-output_csv_path = 'LetAIEntertainYou/Posts/current/posts_rules_neu.csv'
+input_csv_path = 'LetAIEntertainYou/data/posts_neu.csv'
+output_csv_path = 'LetAIEntertainYou/data/posts_rules_neu.csv'
 process_posts(input_csv_path, output_csv_path)

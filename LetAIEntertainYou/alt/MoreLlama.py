@@ -1,9 +1,14 @@
+'''
+war ein versucht, veraltet. siehe Llama3SubjectLines
+'''
+
+
 from gpt4all import GPT4All
 import csv
 import random
 
 from LetAIEntertainYou.Llama3Posts import entries_2
-
+print('wtf')
 model = GPT4All('Meta-Llama-3-8B-Instruct.Q4_0.gguf')
 
 filename = './LetAIEntertainYou/Posts/current/posts_neu.csv'
@@ -61,6 +66,23 @@ print(len(more_posts))
 
 
 prompt= "What is a function call with JSON in the context of llms?"
-output = model.generate("<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n\n" + prompt +
+
+system='You only answer \'Subject Line A\' or \'Subject Line B\''
+user=("Text: Hey neighbors! Just spotted a set of keys with a cute turtle keychain near the playground at Parkside Ave. "
+      "If they're yours or you know whose they might be, please message me here or pick them up at my porch at 153 Parkside Ave. "
+      "Let's get these keys back to their owner! Subject line a: 'Hey neighbors! Just spotted a set of keys with a...' "
+      "Subject line b: 'Keys with turtle keychain found near playground'"
+      "Question: Which subject line is more engaging for an email post? An excellent subject line is coherent, informative, and engaging."
+      " We will send this email to our users hoping the users find it interesting and want to click on the email.")
+
+prompt= (f"<|begin_of_text|><|start_header_id|>system<|end_header_id|> "
+         f"You are an assistant to answer which email subject line is more engaging given the Text and subject line a and subject line b. Only answer a or b"
+         f"<|eot_id|><|start_header_id|>user<|end_header_id|>Text: Hey neighbors! Just spotted a set of keys with a cute turtle keychain near the playground at Parkside Ave. If they're yours or you know whose they might be, please message me here or pick them up at my porch at 153 Parkside Ave. Let's get these keys back to their owner!"
+         f" Subject line a: 'Hey neighbors! Just spotted a set of keys with a...' Subject line b: 'Keys with turtle keychain found near playground' "
+         f"Question: Which subject line is more engaging for an email post? An excellent subject line is coherent, informative, and engaging. "
+         f"We will send this email to our users hoping the users find it interesting and want to click on the email. Answer with a or b <|eot_id|><|start_header_id|>assistant<|end_header_id|>")
+
+
+output = model.generate("<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n" + system +"<|start_header_id|>user<|end_header_id|>\n\n" + user +
                         "<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n")
 print(output)

@@ -1,3 +1,11 @@
+'''
+hier finden sich die listen, die den ursprünglichen AB Vergleich simulieren.
+Hier wurde GPT 4 als Judge verwendet.
+
+'''
+
+
+
 import json
 import csv
 import pandas as pd
@@ -709,7 +717,7 @@ with open('LetAIEntertainYou/combined_strings.csv', 'w', newline='') as csvfile:
 df=pd.read_csv('LetAIEntertainYou/Posts/current/chunks/reverse_fullprompt/output_2.csv', sep=';', encoding='iso-8859-1')
 
 
-
+#sollte erst mit api gemacht werden - hat sich aber recht schnell als sehr teuer erwiesen, deswegen in browser verlegt
 functions = [
     {
         "name": "compare_subject_lines",

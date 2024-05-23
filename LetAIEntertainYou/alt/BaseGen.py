@@ -1,5 +1,5 @@
 """
-Erste Versuche zum Erstellen vom Betreffzeilen
+Erste Versuche zum Erstellen vom Betreffzeilen - wurde schließlich mit llama3 gemacht. siehe dazu Llama3Posts.py
 """
 
 

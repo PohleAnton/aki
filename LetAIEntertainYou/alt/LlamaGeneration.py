@@ -1,3 +1,8 @@
+'''
+altes setup. letztlich wurde Llama3SubjectLines.py verwendet
+'''
+
+
 import json
 import os
 
@@ -209,11 +214,11 @@ set_of_instruction = """
     14. Capitalize the first character of the subject line. If the part you selected starts with a lower-cased character, capitalize the character.
     """
 
-csv = pd.read_csv("./Posts/llama.csv", encoding='utf-8-sig', sep=";")
+csv = pd.read_csv("../Posts/llama.csv", encoding='utf-8-sig', sep=";")
 
 i = 1
 #csv["Llama Baseline"] = csv.loc[:, "Posts"].apply(gen_llama)
 #csv["Rule-based Baseline"] = csv.loc[:, "Posts"].apply(gen_rule_based)
 csv["ChatGPT-3.5-Turbo Baseline"] = csv.loc[:, "Posts"].apply(gen_chatgpt_based)
 
-csv.to_csv(path_or_buf='./Posts/llama_und_ChatGPT.csv', index=False, encoding='utf-8-sig', sep=";")
+csv.to_csv(path_or_buf='../Posts/llama_und_ChatGPT.csv', index=False, encoding='utf-8-sig', sep=";")

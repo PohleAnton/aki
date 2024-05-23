@@ -1,11 +1,16 @@
+'''
+enthält einges zum erzeugen der notwendigen datensätze und vor allem das ergebnis des abc verlgeichs von gpt4
+'''
+
+
 import csv
 import os
 import csv
 
 import pandas as pd
 os.getcwd()
-input_file='LetAIEntertainYou/Posts/current/posts_best_of_n_complete_with_target.csv'
-output_file='LetAIEntertainYou/Posts/current/posts_best_of_n_complete_targets.csv'
+input_file='LetAIEntertainYou/data/posts_best_of_n_complete_with_target.csv'
+output_file='LetAIEntertainYou/data/posts_best_of_n_complete_targets.csv'
 target_columns = []
 df = pd.read_csv(input_file, delimiter=';')
 
@@ -24,10 +29,10 @@ target_df = target_df.applymap(lambda x: x.lstrip() if isinstance(x, str) else x
 
 target_df.to_csv(output_file, index=False)
 
-full='LetAIEntertainYou/Posts/current/posts_rules_base_n.csv'
+full='LetAIEntertainYou/data/posts_rules_base_n.csv'
 df = pd.read_csv(full,delimiter=';')
 rows_per_chunk = 100
-out_dir='LetAIEntertainYou/Posts/current/chunks/n/'
+out_dir='LetAIEntertainYou/data/chunks/n/'
 # Get the header
 header = df.columns
 
@@ -70,6 +75,12 @@ your task is:
 5. i only need your answer for each tripplet - so something like 'C', 'A','B' without explanation
 6. provide your result like a python list'''
 
+
+
+'''
+hier beginnt der abc vergleich von gpt4
+
+'''
 
 singles_1=['B', 'A', 'A', 'B', 'C', 'C', 'B', 'B', 'B', 'C', 'C', 'A', 'A', 'C', 'C', 'C', 'A', 'B', 'B', 'C', 'B', 'B', 'A', 'B', 'B', 'C', 'A', 'B', 'A', 'B', 'A', 'C', 'A', 'B', 'C', 'B', 'B', 'A', 'A', 'B', 'C', 'A', 'A', 'B', 'B', 'A', 'C', 'A', 'B', 'B', 'A', 'C', 'A', 'C', 'B', 'B', 'B', 'A', 'C', 'A', 'A', 'C', 'C', 'B', 'A', 'A', 'C', 'A', 'B', 'B', 'C', 'C', 'A', 'B', 'A', 'A', 'C', 'C', 'A', 'C', 'B', 'A', 'C', 'B', 'C', 'A', 'B', 'B', 'A', 'C', 'A', 'B', 'B', 'A', 'B', 'B', 'B', 'C', 'A', 'C']
 

@@ -1,13 +1,11 @@
 """
 hier sollte vor allem mit einem modell experimentiert weren, welches function calls unterstützt
 vor allem generiert dieses modell sehr zuverlässig posts und auch betreffzeilen.
-das gegenwärtige setup produziert allerdings diesen fehler
 
-The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
-Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
 
-der dazu führt, dass das modell einfach immer weiter generiert, daher wird die range für die betreffzeilen weiter unten auch begrenzt
-unabhängig davon sind geschwindigkeit und qualität des outputs aber sehr gut, deswegen wird dies voererst in kauf genommen
+wurde verwendet, um 1 Subject Line f. ursprünglichen AB Vergleich zu erzeugen und 5 stück für rejection sampling
+
+
 """
 import os
 
@@ -18,11 +16,14 @@ import csv
 
 model_id = "hiieu/Meta-Llama-3-8B-Instruct-function-calling-json-mode"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
+tokenizer.pad_token = tokenizer.eos_token
 model = AutoModelForCausalLM.from_pretrained(
     model_id,
     torch_dtype=torch.bfloat16,
     device_map="auto",
 )
+#ggf. nötig
+model.config.pad_token_id=model.config.eos_token_id
 
 
 set_of_instruction = """
@@ -87,7 +88,7 @@ set_of_instruction = """
 
 def gen_llame(row):
     """
-           Generiert eine base subject line
+           Generiert 5 Subject Lines base subject line
 
            Args:
                row (str): ein post, aus dem eine betreffzeile erzeugt wird
@@ -197,6 +198,11 @@ def truncate_text(text):
     if len(words) > 10:
         return ' '.join(words[:10]) + '...'
     return text
+
+
+#es kam beim erzeugen von 5 lines immer mal zu fehlern, deswegen hier zusammengefasst. das *sollte funktionieren
+# ich hatte keine zeit mehr zum testen
+# *
 
 for i in range(len(df)):
     try:

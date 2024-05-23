@@ -2,7 +2,8 @@
 zusammengefasst mit MoraLlama
 hier werden posts erzeugt, gesammelt und in eine csv geschrieben
 hier werden die erzeugten Posts gesammelt und in eine csv geschrieben
-
+war ein versuch mit einem anderen modell; diese wurde später nicht weiter benutzt. sollte aber nicht relevant sein, da
+posts selbst mit nichts verglichen werden
 """
 
 import re
@@ -1898,7 +1899,7 @@ set_of_instructions = """We will send an email containing a post from a Nextdoor
     14. Capitalize the first character of the subject line. If the part you selected starts with a lower-cased character, capitalize the character.
 """
 
-
+#das hier verwendetet schema f. prompts wird intern erzeugt und muss nicht so genutzt werden, bleibt hier aber zu dokuzwecken so stehen
 examples=entries_2
 
 more_posts = []

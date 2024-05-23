@@ -1,3 +1,11 @@
+'''
+um konsistenz / bias von gpt4 zu bestätigen. tendenz insgesamt einigermaßen konsistent, innerhalb einzelnere listen aber arg verschieden, siehe zub beispiel
+singles_6 oder singles_8
+
+note: 'A' entspricht hier dem best of n ergebnis - also 'C' in der alten liste
+'''
+
+
 singles_1=[
     'C', 'B', 'C', 'B', 'A', 'C', 'C', 'B', 'B', 'A',
     'B', 'C', 'A', 'A', 'A', 'A', 'B', 'B', 'C', 'C',
@@ -194,19 +202,4 @@ count_B_9 = singles_9.count('B')
 count_C_9 = singles_9.count('C')
 
 
-#bis hier:
-#alt:295,327,278
-#32%, 36%, 31
-
-#neu_
-all_singles = []
-for i in range(1,10):
-    all_singles.extend(locals()[f'singles_{i}'])
-
-count_A = all_singles.count('A')
-count_B = all_singles.count('B')
-count_C = all_singles.count('C')
-
-#306,334,260
-#34 %, 37%, 28
 

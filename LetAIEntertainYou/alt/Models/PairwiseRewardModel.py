@@ -8,33 +8,40 @@ import pandas as pd
 import pickle
 import numpy as np
 import os
-
+os.getcwd()
 ### Weil das Programm im Ordner Models startet
-os.chdir("../")
-os.chdir("../")
+#os.chdir("../../")
+#os.chdir("../../")
 # Load the dataset
-df_2 = pd.read_csv('LetAIEntertainYou/Posts/current/posts_rules_base_judged_neu.csv', delimiter=';')
+df_2 = pd.read_csv('LetAIEntertainYou/data/posts_rules_base_judged_neu.csv', delimiter=';')
 
 # Initialize tokenizer
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-model = BertModel.from_pretrained('bert-base-uncased')
+tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
+model = BertModel.from_pretrained('bert-base-cased')
 model.eval()
 
 #embeddings für daten schon gemacht, können so geladen werden:
 #müssen mit dem größeren datensatz erneut gemacht werden...
 
-with open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_a_neu.pkl', 'rb') as f:
-    vector_a = pickle.load(f)
 
-with open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_b_neu.pkl', 'rb') as f:
-    vector_b = pickle.load(f)
+# with open('LetAIEntertainYou/Models/persist/embeddings/vector_posts.pkl', 'rb') as f:
+#     vector_posts = pickle.load(f)
+#
+# with open('LetAIEntertainYou/Models/persist/embeddings/vector_a.pkl', 'rb') as f:
+#     vector_a = pickle.load(f)
+#
+# with open('LetAIEntertainYou/Models/persist/embeddings/vector_b.pkl', 'rb') as f:
+#     vector_b = pickle.load(f)
+def text_to_vector(text):
+    with torch.no_grad():
+        inputs = tokenizer(text, return_tensors='pt', padding=True, truncation=True, max_length=512)
+        outputs = model(**inputs)
+        embeddings = outputs.last_hidden_state.mean(dim=1)
+    return embeddings.squeeze()
 
-with open('LetAIEntertainYou/Posts/Vectors/llama_und_base/vector_posts.pkl', 'rb') as f:
-    vector_posts = pickle.load(f)
-
-df_2['Vector A'] = [torch.tensor(v) for v in vector_a]
-df_2['Vector B'] = [torch.tensor(v) for v in vector_b]
-df_2['Vector Posts'] = [torch.tensor(v) for v in vector_posts]
+df_2['Vector A'] = df_2['Posts'].apply(lambda x: text_to_vector(x).numpy())
+df_2['Vector B'] = df_2['Subject Line A'].apply(lambda x: text_to_vector(x).numpy())
+df_2['Vector Posts'] = df_2['Subject Line B'].apply(lambda x: text_to_vector(x).numpy())
 df_2['Target'] = df_2['Target'].apply(lambda x: 0 if x == 'A' else 1)  # Convert to binary labels
 
 
@@ -49,9 +56,9 @@ class SubjectLineDataset(Dataset):
 
     def __getitem__(self, idx):
         row = self.dataframe.iloc[idx]
-        vector_posts = row['Vector Posts'].clone().detach().float()
-        vector_a = row['Vector A'].clone().detach().float()
-        vector_b = row['Vector B'].clone().detach().float()
+        vector_posts = torch.tensor(row['Vector Posts']).float()
+        vector_a = torch.tensor(row['Vector A']).float()
+        vector_b = torch.tensor(row['Vector B']).float()
         target = torch.tensor(row['Target'], dtype=torch.float)
         return vector_posts, vector_a, vector_b, target
 
@@ -60,13 +67,13 @@ class SubjectLineDataset(Dataset):
 class ComparisonModel(nn.Module):
     def __init__(self):
         super(ComparisonModel, self).__init__()
-        self.fc1 = nn.Linear(2304, 2304) # in_features von 768 auf 1536 erhöht, weil das die Shape der Tensoren ist
+        self.fc1 = nn.Linear(2304, 4608)
         self.relu1 = nn.ReLU()
         self.dropout1 = nn.Dropout(0.5)  # Adding dropout
-        self.fc2 = nn.Linear(2304, 512)
+        self.fc2 = nn.Linear(4608, 1536)
         self.relu2 = nn.ReLU()
         self.dropout2 = nn.Dropout(0.5)  # Adding dropout
-        self.output = nn.Linear(512, 1)
+        self.output = nn.Linear(1536, 1)
 
     def forward(self, post, vector_a, vector_b):
         x = torch.cat((post, vector_a, vector_b), dim=1)
