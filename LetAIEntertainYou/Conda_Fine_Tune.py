@@ -22,4 +22,7 @@ for me:
 /home/meth/miniconda3/bin/python
 -->
 \\wsl$\Ubuntu\home\meth\minconda3\bin\python
+
+
+
 '''

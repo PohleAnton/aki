@@ -1,0 +1,251 @@
+instruction,input,output,text
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Hey neighbors! Just spotted a set of keys with a cute turtle keychain near the playground at Parkside Ave. If they're yours or you know whose they might be, please message me here or pick them up at my porch at 153 Parkside Ave. Let's get these keys back to their owner! Subject Line: Hey neighbors! Just spotted a set of keys with a...",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Hey neighbors! Just spotted a set of keys with a cute turtle keychain near the playground at Parkside Ave. If they're yours or you know whose they might be, please message me here or pick them up at my porch at 153 Parkside Ave. Let's get these keys back to their owner! Subject Line: Keys with turtle keychain found near playground",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: I'm trying to get a carpool group together for daily commutes to the city center. If anyone is interested in joining to save on gas and reduce traffic, please reach out so we can coordinate our schedules. Subject Line: I'm trying to get a carpool group together for daily...",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: I'm trying to get a carpool group together for daily commutes to the city center. If anyone is interested in joining to save on gas and reduce traffic, please reach out so we can coordinate our schedules. Subject Line: I'm trying to get a carpool group together for daily...",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: For rent: A small, two-bedroom house near the city park. Pet-friendly, with a fenced yard. Available starting next month. Contact me for details and to schedule a viewing. Subject Line: For rent: A small, two-bedroom house near the city park....",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: For rent: A small, two-bedroom house near the city park. Pet-friendly, with a fenced yard. Available starting next month. Contact me for details and to schedule a viewing. Subject Line: For Rent: A Small, Two-Bedroom House Near The City Park",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: The city council will be discussing the new public transportation routes and schedules at their meeting this Thursday. All residents are welcome to attend and provide feedback. Subject Line: The city council will be discussing the new public transportation...,No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: The city council will be discussing the new public transportation routes and schedules at their meeting this Thursday. All residents are welcome to attend and provide feedback. Subject Line: The City Council Discusses Public Transportation Routes,Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Calling all photographers! The nature reserve is hosting its annual photo contest. This year's theme is ""Wildlife in Action."" Submit your best shots for a chance to win prizes and be featured in our calendar. Subject Line: Calling all photographers! The nature reserve is hosting its annual...",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Calling all photographers! The nature reserve is hosting its annual photo contest. This year's theme is ""Wildlife in Action."" Submit your best shots for a chance to win prizes and be featured in our calendar. Subject Line: Wildlife in Action",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Garage sale this weekend! We're downsizing and have furniture, tools, books, and more. Everything must go. Stop by our place on Maple Street from 9 AM to 3 PM, Saturday and Sunday. Subject Line: Garage sale this weekend! We're downsizing and have furniture, tools,...",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Garage sale this weekend! We're downsizing and have furniture, tools, books, and more. Everything must go. Stop by our place on Maple Street from 9 AM to 3 PM, Saturday and Sunday. Subject Line: Garage Sale This Weekend!",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: We need more contributors for the community garden blog. If you have gardening tips, recipes for garden produce, or stories about local flora and fauna, we would love to hear from you. Subject Line: We need more contributors for the community garden blog. If...",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: We need more contributors for the community garden blog. If you have gardening tips, recipes for garden produce, or stories about local flora and fauna, we would love to hear from you. Subject Line: We Need More Contributors for the Community Garden Blog",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: To the person who helped me jump-start my car near the grocery store - thank you! Your kindness was a big help. I didn't get your name, but I'm grateful for your assistance. Subject Line: To the person who helped me jump-start my car near...",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: To the person who helped me jump-start my car near the grocery store - thank you! Your kindness was a big help. I didn't get your name, but I'm grateful for your assistance. Subject Line: Thank You for the Kindness",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: The local theatre is seeking donations of costumes and props for their upcoming season. If you have items to spare, please consider supporting our arts community. Drop-offs can be made at the theatre box office during business hours. Subject Line: The local theatre is seeking donations of costumes and props...",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: The local theatre is seeking donations of costumes and props for their upcoming season. If you have items to spare, please consider supporting our arts community. Drop-offs can be made at the theatre box office during business hours. Subject Line: The local theatre is seeking donations of costumes and props...",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Missing cat: Our beloved Siamese, Luna, has been missing since Tuesday. She was last seen near Wilson Elementary. She's very shy and probably hiding. If you see her, please contact us immediately. Subject Line: Missing cat: Our beloved Siamese, Luna, has been missing since...",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Missing cat: Our beloved Siamese, Luna, has been missing since Tuesday. She was last seen near Wilson Elementary. She's very shy and probably hiding. If you see her, please contact us immediately. Subject Line: Missing Cat Since Tuesday",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: Our local museum is offering free admission this weekend to celebrate their new exhibit on regional history. It's a great opportunity to learn about our area's past and enjoy some beautiful artifacts. All are welcome! Subject Line: Our local museum is offering free admission this weekend to...,No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: Our local museum is offering free admission this weekend to celebrate their new exhibit on regional history. It's a great opportunity to learn about our area's past and enjoy some beautiful artifacts. All are welcome! Subject Line: FREE Admission to Regional History Exhibit This Weekend,Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: A gentle reminder to all residents: Please keep your lawns trimmed and clear of debris. Let's keep our neighborhood beautiful and safe for everyone to enjoy. Subject Line: A gentle reminder to all residents: Please keep your lawns...,Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: A gentle reminder to all residents: Please keep your lawns trimmed and clear of debris. Let's keep our neighborhood beautiful and safe for everyone to enjoy. Subject Line: Keep Your Lawns Trimmed and Clear,No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: I'm thinking about starting a book club here in town with a focus on modern fiction. Would anyone be interested in joining? Planning to meet once a month at the local library or a cafe. Subject Line: I'm thinking about starting a book club here in town...,No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: I'm thinking about starting a book club here in town with a focus on modern fiction. Would anyone be interested in joining? Planning to meet once a month at the local library or a cafe. Subject Line: I'm thinking about starting a book club,Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: A group of us are organizing a community-wide yard sale next month. If you'd like to participate or need more information, please send me a message. It's a great way to declutter and find new treasures. Subject Line: A group of us are organizing a community-wide yard sale...",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: A group of us are organizing a community-wide yard sale next month. If you'd like to participate or need more information, please send me a message. It's a great way to declutter and find new treasures. Subject Line: Community-Wide Yard Sale",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: We are looking for volunteers to help with the senior center's weekly bingo night. It's a fun way to give back and spend some time with our wonderful elderly community. Subject Line: We are looking for volunteers to help with the senior...,Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: We are looking for volunteers to help with the senior center's weekly bingo night. It's a fun way to give back and spend some time with our wonderful elderly community. Subject Line: We Are Looking for Volunteers,No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Attention, pet owners! There have been reports of increased tick activity in the local parks. Please make sure to check your pets after walks and consider preventative treatments. Subject Line: Attention, pet owners! There have been reports of increased tick...",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Attention, pet owners! There have been reports of increased tick activity in the local parks. Please make sure to check your pets after walks and consider preventative treatments. Subject Line: Increased tick activity in local parks",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Found a pair of children's glasses near the playground at Oak Grove Park. They are red and have small stars on the frame. If they belong to your child, please contact me to arrange pickup. Subject Line: Found a pair of children's glasses near the playground at...",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Found a pair of children's glasses near the playground at Oak Grove Park. They are red and have small stars on the frame. If they belong to your child, please contact me to arrange pickup. Subject Line: Found a pair of children's glasses near Oak Grove Park",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: Notice to all: The bridge on Jefferson Road will be closed for repairs starting next week. The work is expected to last approximately three weeks. Please plan alternate routes accordingly. Subject Line: Notice to all: The bridge on Jefferson Road will be...,No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: Notice to all: The bridge on Jefferson Road will be closed for repairs starting next week. The work is expected to last approximately three weeks. Please plan alternate routes accordingly. Subject Line: Bridge Closure Notice,Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: Join us for the community potluck dinner next Friday at the recreation center. Bring a dish to share and enjoy a night of good food and great conversation with neighbors. Subject Line: Join us for the community potluck dinner next Friday at...,Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: Join us for the community potluck dinner next Friday at the recreation center. Bring a dish to share and enjoy a night of good food and great conversation with neighbors. Subject Line: Join us for the community potluck dinner next Friday,No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: Our high school's music department is hosting a car wash fundraiser this Saturday in the school parking lot. Come support our talented students and leave with a sparkling clean car! Subject Line: Our high school's music department is hosting a car wash...,No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: Our high school's music department is hosting a car wash fundraiser this Saturday in the school parking lot. Come support our talented students and leave with a sparkling clean car! Subject Line: Come Support Our Talented Students,Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: I'm collecting old laptops and tablets to donate to local schools for students in need. If you have devices you no longer use, please consider donating them to this cause. Contact me for drop-off details. Subject Line: I'm collecting old laptops and tablets to donate to local...",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: I'm collecting old laptops and tablets to donate to local schools for students in need. If you have devices you no longer use, please consider donating them to this cause. Contact me for drop-off details. Subject Line: I'm Collecting Old Laptops and Tablets",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: The community health clinic will be offering free health screenings next Tuesday from 1 PM to 5 PM. Screenings include blood pressure, cholesterol, and glucose tests. Subject Line: The community health clinic will be offering free health screenings...",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: The community health clinic will be offering free health screenings next Tuesday from 1 PM to 5 PM. Screenings include blood pressure, cholesterol, and glucose tests. Subject Line: Free Health Screenings Next Tuesday",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Lost dog notice: Our family's black Labrador, Max, wandered off last night during the fireworks. He's friendly and has a blue collar with a tag. Please call if you find him. Subject Line: Lost dog notice: Our family's black Labrador, Max, wandered off...",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: Lost dog notice: Our family's black Labrador, Max, wandered off last night during the fireworks. He's friendly and has a blue collar with a tag. Please call if you find him. Subject Line: LOST DOG NOTICE: Black Labrador with blue collar",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: We're missing a friendly orange tabby cat from our home near Elm Street. He's very sociable and answers to Simba. If anyone has seen him, please give us a call. We're very worried. Subject Line: We're missing a friendly orange tabby cat from our home...",No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,"Post: We're missing a friendly orange tabby cat from our home near Elm Street. He's very sociable and answers to Simba. If anyone has seen him, please give us a call. We're very worried. Subject Line: Missing Friendly Orange Tabby Cat",Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: Calling all amateur astronomers! Join us for a night of stargazing at Hilltop Park this Wednesday. We'll have telescopes set up and experts on hand to guide us through the constellations. Subject Line: Calling all amateur astronomers! Join us for a night of...,Yes,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+Yes"
+Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only,Post: Calling all amateur astronomers! Join us for a night of stargazing at Hilltop Park this Wednesday. We'll have telescopes set up and experts on hand to guide us through the constellations. Subject Line: Join us for a night of stargazing at Hilltop Park...,No,"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request
+
+### Instruction: Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only
+###Response:
+No"

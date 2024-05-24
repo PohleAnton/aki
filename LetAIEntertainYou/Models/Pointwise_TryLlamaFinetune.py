@@ -15,12 +15,12 @@ from torch.utils.data import DataLoader
 
 #still waiting for authorization...
 #ist nur wichtig f. meta-llama/... - also NICHT für das hier verwendete tuning
-# token = os.getenv('HUGGINGFACEHUB_API_TOKEN')
-# if token:
-#     print("Token is set successfully")
-# else:
-#     print("Token is not set")
-#
+token = os.getenv('HUGGINGFACEHUB_API_TOKEN')
+if token:
+    print("Token is set successfully")
+else:
+    print("Token is not set")
+
 # login(token)
 # model = AutoModelForCausalLM.from_pretrained(
 #     model_id,
@@ -37,7 +37,7 @@ tokenizer.pad_token = tokenizer.eos_token
 
 
 
-#ich glaube, dass sagt uns, dass sequence classification hier möglich ist...ergo:
+
 #device = torch_device("cuda" if torch.cuda.is_available() else "cpu")
 device = torch.device("cpu")
 model = AutoModelForSequenceClassification.from_pretrained(model_id, num_labels=2).to(device)
