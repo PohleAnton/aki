@@ -61,7 +61,7 @@ train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True)
 test_loader = DataLoader(test_dataset, batch_size=8, shuffle=False)
 
 
-
+model =BertModel.from_pretrained('bert-base-cased')
 class PairwiseBERT(nn.Module):
     def __init__(self):
         super(PairwiseBERT, self).__init__()
@@ -91,7 +91,7 @@ total_steps = len(train_loader) * 3
 scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=0, num_training_steps=total_steps)
 
 
-num_epochs = 20
+num_epochs = 1
 for epoch in range(num_epochs):
     model.train()
     total_loss = 0
@@ -127,6 +127,7 @@ with torch.no_grad():
         true_labels.extend(labels.cpu().numpy())
 
 
+# das dient vor allem um zu checken, ob beide labesl vorhergesagt werden können - es kam oft vor, dass nur 1 vorhergesagt wurde
 accuracy = accuracy_score(true_labels, predictions)
 print(f'Accuracy: {accuracy * 100:.2f}%')
 print("Confusion Matrix:")

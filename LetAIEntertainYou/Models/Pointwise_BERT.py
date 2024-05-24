@@ -1,3 +1,4 @@
+
 import pandas as pd
 import torch
 from datasets import Dataset
@@ -33,7 +34,7 @@ for index, row in data.iterrows():
 
 # Convert to DataFrame
 pointwise_df = pd.DataFrame(pointwise_data)
-
+pointwise_df.head()
 
 
 train, test = train_test_split(pointwise_df, test_size=0.2, random_state=42)
@@ -119,4 +120,61 @@ torch.save(model_b.state_dict(), model_save_path)
 print(f"Model saved to {model_save_path}")
 
 
+# jsonl_data=[]
+#
+# for _, row in pointwise_df.iterrows():
+#     prompt = f"Post: {row['Post']}\nSubject Line: {row['Subject Line']}\nIs this subject line engaging?"
+#     completion = f" {row['Label']}"
+#     jsonl_data.append({"prompt": prompt, "completion": completion})
+#
+# output_path='LetAIEntertainYou/data/pointwise.json'
+# with jsonlines.open(output_path, mode='w') as writer:
+#     for entry in jsonl_data:
+#         writer.write(entry)
+#
+# with open(output_path, 'r') as file:
+#     for i, line in enumerate(file):
+#         if i >= 5:  # Limit output to the first 5 lines
+#             break
+#         print(line.strip())
+#
+#
+df = pd.DataFrame(pointwise_df)
+df["instruction"] = "Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only"
+df["input"] = "Post: " + df["Post"] + " Subject Line: " + df["Subject Line"]
+df = df[["instruction", "input", "Label"]]
+df = df.rename(columns={"Label": "output"})
+df['input'][1]
 
+output_path= 'LetAIEntertainYou/data/for_llama3.csv'
+df.to_csv(output_path, index=False)
+
+print("CSV file has been saved to", output_path)
+
+
+
+
+'''
+dieser code wird benutzt,um den gewinner aus best of n zu ermitteln:
+'''
+data = pd.read_csv('LetAIEntertainYou/data/posts_best_of_n_complete.csv', delimiter=';', encoding="utf-8", na_filter=True)
+
+
+def score_subject_lines(row):
+    post = row['Posts']
+    subject_lines = ['Subject Line A', 'Subject Line B', 'Subject Line C', 'Subject Line D', 'Subject Line E']
+
+    scores = []
+    for subject in subject_lines:
+        text = post + ' ' + row[subject]
+        inputs = tokenizer(text, return_tensors='pt', padding='max_length', truncation=True).to(device)
+        with torch.no_grad():
+            outputs = model_b(**inputs)
+        scores.append(outputs.logits[0][1].item())  # Get the score for the positive class
+
+    max_index = scores.index(max(scores))
+    return subject_lines[max_index][-1]  # Returns 'A', 'B', 'C', 'D', or 'E'
+
+
+# Apply the function to each row and create the 'Target' column
+data['Target'] = data.apply(score_subject_lines, axis=1)

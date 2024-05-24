@@ -3,36 +3,12 @@ import jsonlines
 import time
 import openai
 
-file_path = 'Mappe1.xlsx'
-df = pd.read_excel(file_path)
-
-
-data = []
-for _, row in df.iterrows():
-    subject_a = row['Subject Line A']
-    subject_b = row['Subject Line B']
-    target = row['Target']
-
-    prompt_a = f"Context: Which subject line is more engaging?\nGenerated answer: A: {subject_a}\nIs this a good answer?"
-    prompt_b = f"Context: Which subject line is more engaging?\nGenerated answer: B: {subject_b}\nIs this a good answer?"
-
-    if target == 'A':
-        data.append({"prompt": prompt_a, "completion": " Yes"})
-        data.append({"prompt": prompt_b, "completion": " No"})
-    else:
-        data.append({"prompt": prompt_a, "completion": " No"})
-        data.append({"prompt": prompt_b, "completion": " Yes"})
-
-
-with jsonlines.open('training_data_pointwise.jsonl', mode='w') as writer:
-    for entry in data:
-        writer.write(entry)
 
 openai.api_key = '...'
 
 # Upload the file
 response = openai.File.create(
-  file=open("/mnt/data/training_data_pointwise.jsonl"),
+  file=open("LetAIEntertainYou/data/pointwise.jsonl"),
   purpose='fine-tune'
 )
 
