@@ -85,6 +85,11 @@ class PairwiseBERT(nn.Module):
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 model = PairwiseBERT().to(device)
+'''
+ich habe leider vergessen, mit vielen epochen trainiert...40? die genauigkeit ist (wie im paper) ohnehin nicht gut (50.1)
+model_save_path = "LetAIEntertainYou/Models/persist/BERT_pairwise.pth"
+model.load_state_dict(torch.load(model_save_path))
+'''
 criterion = nn.BCEWithLogitsLoss()
 optimizer = AdamW(model.parameters(), lr=2e-5)
 total_steps = len(train_loader) * 3
@@ -139,3 +144,53 @@ print(classification_report(true_labels, predictions))
 model_save_path = "LetAIEntertainYou/Models/persist/BERT_pairwise.pth"
 torch.save(model.state_dict(), model_save_path)
 print(f"Model saved to {model_save_path}")
+
+
+#pick winner best of n
+data = pd.read_csv('LetAIEntertainYou/data/posts_best_of_n_complete.csv', delimiter=';', encoding="utf-8", na_filter=True)
+
+
+
+
+#das könnte genutzt werden, um pairwise alle 5 samples zu vergleichen...im paper wird pointwise genutzt, deswegen machen wir das auch vorerste
+def compare_subject_lines(model, tokenizer, context, subject_line1, subject_line2):
+
+    inputs1 = tokenizer(context + " " + subject_line1, return_tensors='pt', padding='max_length', truncation=True, max_length=512)
+    inputs2 = tokenizer(context + " " + subject_line2, return_tensors='pt', padding='max_length', truncation=True, max_length=512)
+
+
+    input_ids = torch.cat([inputs1['input_ids'], inputs2['input_ids']], dim=0).unsqueeze(0).to(device)
+    attention_mask = torch.cat([inputs1['attention_mask'], inputs2['attention_mask']], dim=0).unsqueeze(0).to(device)
+    token_type_ids = torch.cat([inputs1['token_type_ids'], inputs2['token_type_ids']], dim=0).unsqueeze(0).to(device)
+
+    with torch.no_grad():
+        logits = model(input_ids, attention_mask, token_type_ids).squeeze()
+
+
+    logits_value = logits.item()
+    if logits_value > 0:
+        return subject_line1
+    else:
+        return subject_line2
+
+
+def find_best_subject_line(model, tokenizer, row):
+    context = row['Posts']
+    current_winner = row['Subject Line A']
+    for i in range(1, 5):  # From B to E
+        next_contender = row[f'Subject Line {chr(65+i)}']
+        current_winner = compare_subject_lines(model, tokenizer, context, current_winner, next_contender)
+
+    return current_winner
+
+# Apply to DataFrame
+data['Best Subject Line'] = data.apply(lambda row: find_best_subject_line(model, tokenizer, row), axis=1)
+
+def trim_subject_line(subject):
+    words = subject.split()
+    if len(words) > 10:
+        return ' '.join(words[:10]) + '...'
+    else:
+        return subject
+data['Best Subject Line'] = data['Best Subject Line'].apply(trim_subject_line)
+data.to_csv('LetAIEntertainYou/data/pair_rejection_results.csv', sep=';', encoding='utf-8', index=False)

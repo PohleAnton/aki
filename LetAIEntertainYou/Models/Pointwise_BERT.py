@@ -8,8 +8,13 @@ from torch.utils.data import DataLoader
 from transformers import BertForSequenceClassification, BertTokenizer, AdamW, AutoTokenizer, \
     AutoModelForSequenceClassification
 
+print(torch.cuda.is_available())
+print(torch.version.cuda)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model_b = BertForSequenceClassification.from_pretrained('bert-base-cased', num_labels=2).to(device)
+model_b = BertForSequenceClassification.from_pretrained('bert-base-cased', num_labels=2)
+model_b.to(device)
+
+model_b.to(device)
 model_save_path = "LetAIEntertainYou/Models/persist/BERT_pointwise.pth"
 model_b.load_state_dict(torch.load(model_save_path))
 tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
@@ -120,25 +125,8 @@ torch.save(model_b.state_dict(), model_save_path)
 print(f"Model saved to {model_save_path}")
 
 
-# jsonl_data=[]
-#
-# for _, row in pointwise_df.iterrows():
-#     prompt = f"Post: {row['Post']}\nSubject Line: {row['Subject Line']}\nIs this subject line engaging?"
-#     completion = f" {row['Label']}"
-#     jsonl_data.append({"prompt": prompt, "completion": completion})
-#
-# output_path='LetAIEntertainYou/data/pointwise.json'
-# with jsonlines.open(output_path, mode='w') as writer:
-#     for entry in jsonl_data:
-#         writer.write(entry)
-#
-# with open(output_path, 'r') as file:
-#     for i, line in enumerate(file):
-#         if i >= 5:  # Limit output to the first 5 lines
-#             break
-#         print(line.strip())
-#
-#
+
+
 df = pd.DataFrame(pointwise_df)
 df["instruction"] = "Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only"
 df["input"] = "Post: " + df["Post"] + " Subject Line: " + df["Subject Line"]
@@ -159,7 +147,7 @@ dieser code wird benutzt,um den gewinner aus best of n zu ermitteln:
 '''
 data = pd.read_csv('LetAIEntertainYou/data/posts_best_of_n_complete.csv', delimiter=';', encoding="utf-8", na_filter=True)
 
-
+#hier wird das pointwise genutzt, um rejection sampling aus 5 samples durchzuführen. das dauert einen moment...
 def score_subject_lines(row):
     post = row['Posts']
     subject_lines = ['Subject Line A', 'Subject Line B', 'Subject Line C', 'Subject Line D', 'Subject Line E']
@@ -170,11 +158,16 @@ def score_subject_lines(row):
         inputs = tokenizer(text, return_tensors='pt', padding='max_length', truncation=True).to(device)
         with torch.no_grad():
             outputs = model_b(**inputs)
-        scores.append(outputs.logits[0][1].item())  # Get the score for the positive class
+        scores.append(outputs.logits[0][1].item())
 
     max_index = scores.index(max(scores))
-    return subject_lines[max_index][-1]  # Returns 'A', 'B', 'C', 'D', or 'E'
+    winning_string = row[subject_lines[max_index]]
+    words = winning_string.split()
+    #wird im paper auch nachträglich für llm generierte subject lines gemacht
+    if len(words) > 10:
+        winning_string = ' '.join(words[:10]) + '...'
+    return winning_string
 
 
-# Apply the function to each row and create the 'Target' column
 data['Target'] = data.apply(score_subject_lines, axis=1)
+data.to_csv('LetAIEntertainYou/data/rejection_results.csv', sep=';', encoding='utf-8', index=False)
