@@ -51,7 +51,7 @@ df=df.drop(columns=['input','output' ])
 
 df_first_50_rows = df.head(50)
 
-#df_first_50_rows.loc[:, 'label'] = df_first_50_rows['label'].apply(lambda x: 1 if x == 'Yes' else 0)
+##df_first_50_rows.loc[:, 'label'] = df_first_50_rows['label'].apply(lambda x: 1 if x == 'Yes' else 0)
 
 
 model_id = "hiieu/Meta-Llama-3-8B-Instruct-function-calling-json-mode"
