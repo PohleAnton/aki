@@ -203,3 +203,12 @@ count_C_9 = singles_9.count('C')
 
 
 
+#reversed columns - hier stand c an erster stelle:
+#278, 327,295
+#30%, 36%, 32
+
+#frage nach signifikanz...
+#aber: an letzter stelle hat a den niedrigsten wert, b ist in position und count relativ konstant, c ha an erster stelle den besten werrt...
+
+
+
