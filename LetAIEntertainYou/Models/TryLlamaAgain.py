@@ -53,7 +53,6 @@ df_first_50_rows = df.head(50)
 
 ##df_first_50_rows.loc[:, 'label'] = df_first_50_rows['label'].apply(lambda x: 1 if x == 'Yes' else 0)
 
-
 model_id = "hiieu/Meta-Llama-3-8B-Instruct-function-calling-json-mode"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 tokenizer.pad_token = tokenizer.eos_token
@@ -80,7 +79,7 @@ def tokenize_function(examples):
 
 train_df, test_df = train_test_split(df_first_50_rows, test_size=0.2, random_state=42)
 
-#neustart nötig, um das selbe zu bekommen...
+#neustart nötig, um das selbe zu bekommen...irgendwann ggf. basismodel erneut testen, zuerst einen weiteren layer unfreezen
 #test_df=pd.reed_csv('LetAIEntertainYou/data/test_df.csv', delimiter=';', encoding="utf-8", na_filter=False)
 
 train_dataset = Dataset.from_pandas(train_df)
@@ -98,9 +97,15 @@ batch_size = 8
 train_dataloader = DataLoader(train_tokenized, batch_size=batch_size, shuffle=True)
 test_dataloader = DataLoader(test_tokenized, batch_size=batch_size, shuffle=False)
 for param in model.parameters():
+    print(param)
     param.requires_grad = False
 
 for param in model.score.parameters():
+    param.requires_grad = True
+
+#unfreeze one more layer
+num_layers = len(model.model.layers)
+for param in model.model.layers[num_layers - 1].parameters():
     param.requires_grad = True
 
 optimizer = AdamW(filter(lambda p: p.requires_grad, model.parameters()), lr=2e-5)
