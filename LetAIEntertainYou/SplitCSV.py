@@ -4,10 +4,10 @@ import pandas as pd
 
 # Path to the input CSV file
 #input_csv_path = 'LetAIEntertainYou/Posts/current/reverse_bias_fullpromptforcomparison.csv'
-input_csv_path = 'LetAIEntertainYou/data/pair_c_b_comparison_full_set.csv'
+input_csv_path = 'LetAIEntertainYou/data/pair_a_c_comparison_full_set_prep.csv'
 # Directory to store the output CSV files
 #output_directory = 'LetAIEntertainYou/posts/current/chunks/reverse_fullprompt'
-output_directory = 'LetAIEntertainYou/data/chunks/pair/cb'
+output_directory = 'LetAIEntertainYou/data/chunks/pair/ac'
 os.makedirs(output_directory, exist_ok=True)
 
 
