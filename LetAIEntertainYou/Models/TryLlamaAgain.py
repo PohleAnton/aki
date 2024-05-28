@@ -1,10 +1,12 @@
 import  pandas as pd
 import torch
 from datasets import Dataset
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+from torch import no_grad
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, AdamW, get_scheduler, \
     get_linear_schedule_with_warmup, LlamaForSequenceClassification, AutoModelForCausalLM, LlamaTokenizer, \
-    BitsAndBytesConfig
+    BitsAndBytesConfig, BertForSequenceClassification, BertTokenizer
 from torch.utils.data import DataLoader, RandomSampler
 import bitsandbytes as bnb
 
@@ -49,8 +51,7 @@ df=df.drop(columns=['input','output' ])
 
 df_first_50_rows = df.head(50)
 
-df_first_50_rows.loc[:, 'label'] = df_first_50_rows['label'].apply(lambda x: 1 if x == 'Yes' else 0)
-
+##df_first_50_rows.loc[:, 'label'] = df_first_50_rows['label'].apply(lambda x: 1 if x == 'Yes' else 0)
 
 model_id = "hiieu/Meta-Llama-3-8B-Instruct-function-calling-json-mode"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -78,6 +79,8 @@ def tokenize_function(examples):
 
 train_df, test_df = train_test_split(df_first_50_rows, test_size=0.2, random_state=42)
 
+#neustart nötig, um das selbe zu bekommen...irgendwann ggf. basismodel erneut testen, zuerst einen weiteren layer unfreezen
+#test_df=pd.reed_csv('LetAIEntertainYou/data/test_df.csv', delimiter=';', encoding="utf-8", na_filter=False)
 
 train_dataset = Dataset.from_pandas(train_df)
 test_dataset = Dataset.from_pandas(test_df)
@@ -94,9 +97,15 @@ batch_size = 8
 train_dataloader = DataLoader(train_tokenized, batch_size=batch_size, shuffle=True)
 test_dataloader = DataLoader(test_tokenized, batch_size=batch_size, shuffle=False)
 for param in model.parameters():
+    print(param)
     param.requires_grad = False
 
 for param in model.score.parameters():
+    param.requires_grad = True
+
+#unfreeze one more layer
+num_layers = len(model.model.layers)
+for param in model.model.layers[num_layers - 1].parameters():
     param.requires_grad = True
 
 optimizer = AdamW(filter(lambda p: p.requires_grad, model.parameters()), lr=2e-5)
@@ -124,3 +133,49 @@ for epoch in range(1):
         total_loss += loss.item()
 
     print(f"Epoch {epoch + 1}, Average Loss: {total_loss / len(train_dataloader)}")
+
+model_save_path = "LetAIEntertainYou/Models/persist/llama_2_epoch_3.pth"
+torch.save(model.state_dict(), model_save_path)
+print(f"Model saved to {model_save_path}")
+
+
+#vergleiche:
+#bert untrained: 0.47
+#bert trained, 20 epochs: 0.53
+
+#das dataset für bert sieht anders aus, weil ich hier ein pre-processing für den autotrainer vorgenommen habe.
+#funktional ist es aber identisch. test methode findet sich in Pointwise_BERT eval_model
+
+
+device_l = torch.device( "cpu")
+model_id = "hiieu/Meta-Llama-3-8B-Instruct-function-calling-json-mode"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+tokenizer.pad_token = tokenizer.eos_token
+model_l = LlamaForSequenceClassification.from_pretrained(model_id, num_labels=2, ).to(device_l)
+model_l.config.pad_token_id=model_l.config.eos_token_id
+model_l_save_path="LetAIEntertainYou/Models/persist/llama_2_epoch_2.pth"
+model_l.load_state_dict(torch.load(model_l_save_path))
+
+def evaluate_model(model, dataloader, device):
+    model.eval()  # Set model to evaluation mode
+    true_labels = []
+    predictions = []
+
+    with torch.no_grad():  # No need to track gradients during evaluation
+        for batch in dataloader:
+            inputs, labels = batch['input_ids'].to(device), batch['labels'].to(device)
+            attention_mask = batch['attention_mask'].to(device)
+
+            outputs = model(input_ids=inputs, attention_mask=attention_mask)
+            logits = outputs.logits
+            preds = torch.argmax(logits, dim=1)
+
+            predictions.extend(preds.detach().cpu().numpy())
+            true_labels.extend(labels.detach().cpu().numpy())
+
+    accuracy = accuracy_score(true_labels, predictions)
+    return accuracy
+
+# Calculate accuracy on the test set
+accuracy = evaluate_model(model_l, test_dataloader, device_l)
+print(f"Test Accuracy: {accuracy}")
