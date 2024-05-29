@@ -694,3 +694,15 @@ count_B_all =all_singles.count('B')
 #46,6% f. B (llama3)
 
 #-->leichte verbesserung
+
+import pandas as pd
+data_2=pd.read_csv('LetAIEntertainYou/data/a_c_comparison_full_set.csv', delimiter=';')
+df = pd.DataFrame(data_2)
+
+new_data ={
+    'post': df['Posts'],
+     'subject line': [df.loc[i, 'Subject Line B'] if all_singles[i] == 'B' else df.loc[i, 'Subject Line A'] for i in range(len(df))]
+
+}
+new_df = pd.DataFrame(new_data)
+new_df.to_csv('LetAIEntertainYou/data/data_for_policy.csv',  sep=';',index=False)
