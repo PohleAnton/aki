@@ -47,10 +47,10 @@ train, test = train_test_split(pointwise_df, test_size=0.2, random_state=42)
 train_dataset = Dataset.from_pandas(train)
 
 test_dataset = Dataset.from_pandas(test)
-
+instruction ="Given a Post and a possible Subject Line for an E-Mail: Determine if the Subject Line is Engaging. Answer Yes or No only"
 # Tokenize function
 def tokenize_function(examples):
-    concatenated = [post + ' ' + subject for post, subject in zip(examples['Post'], examples['Subject Line'])]
+    concatenated = [instruction + '' +post + ' ' + subject for post, subject in zip(examples['Post'], examples['Subject Line'])]
     model_inputs = tokenizer(concatenated, padding='max_length', truncation=True)
     labels = [1 if label == 'Yes' else 0 for label in examples['Label']]
     model_inputs['labels'] = labels
@@ -77,7 +77,7 @@ optimizer = AdamW(model_b.parameters(), lr=1e-5)
 # siehe_ https://github.com/huggingface/transformers/blob/9aeacb58bab321bc21c24bbdf7a24efdccb1d426/src/transformers/modeling_bert.py#L1353-L1360
 # Training loop
 model_b.train()
-for epoch in range(20):
+for epoch in range(10):
     for batch_index, batch_data in enumerate(train_loader):
         ids = batch_data['input_ids'].to(device)
         mask = batch_data['attention_mask'].to(device)
