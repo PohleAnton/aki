@@ -77,7 +77,7 @@ optimizer = AdamW(model_b.parameters(), lr=1e-5)
 # siehe_ https://github.com/huggingface/transformers/blob/9aeacb58bab321bc21c24bbdf7a24efdccb1d426/src/transformers/modeling_bert.py#L1353-L1360
 # Training loop
 model_b.train()
-for epoch in range(10):
+for epoch in range(20):
     for batch_index, batch_data in enumerate(train_loader):
         ids = batch_data['input_ids'].to(device)
         mask = batch_data['attention_mask'].to(device)

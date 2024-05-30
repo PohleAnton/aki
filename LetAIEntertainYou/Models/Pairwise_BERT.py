@@ -15,7 +15,7 @@ df_2['Target'] = df_2['Target'].apply(lambda x: 0 if x == 'A' else 1)  # Convert
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 
-
+instruction = "Which subject line is more engaging for an email post?"
 
 class PairwiseDataset(Dataset):
     def __init__(self, dataframe):
@@ -41,9 +41,9 @@ class PairwiseDataset(Dataset):
 
     def __getitem__(self, idx):
         context, answer_a, answer_b, target = self.pairs[idx]
-        inputs_a = tokenizer(context + " " + answer_a, return_tensors='pt', padding='max_length', truncation=True,
+        inputs_a = tokenizer(instruction + context + " " + answer_a, return_tensors='pt', padding='max_length', truncation=True,
                              max_length=512)
-        inputs_b = tokenizer(context + " " + answer_b, return_tensors='pt', padding='max_length', truncation=True,
+        inputs_b = tokenizer(instruction  +context + " " + answer_b, return_tensors='pt', padding='max_length', truncation=True,
                              max_length=512)
 
         inputs = {key: torch.cat((inputs_a[key], inputs_b[key]), dim=0) for key in inputs_a.keys()}
@@ -96,7 +96,7 @@ total_steps = len(train_loader) * 3
 scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=0, num_training_steps=total_steps)
 
 
-num_epochs = 1
+num_epochs = 40
 for epoch in range(num_epochs):
     model.train()
     total_loss = 0
