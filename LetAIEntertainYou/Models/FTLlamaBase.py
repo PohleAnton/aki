@@ -110,7 +110,7 @@ num_training_steps = len(train_dataloader) * 3
 
 
 lr_scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=0, num_training_steps=num_training_steps)
-
+criterion = torch.nn.CrossEntropyLoss()
 
 model.train()
 
@@ -122,7 +122,7 @@ for epoch in range(1):
         inputs, labels = batch['input_ids'], batch['labels']
         attention_mask = batch['attention_mask']
         outputs = model(input_ids=inputs, attention_mask=attention_mask, labels=labels)
-        loss = outputs.loss
+        loss = outputs.loss if 'loss' in outputs else criterion(outputs.logits, labels)
         loss.backward()
         optimizer.step()
         lr_scheduler.step()
